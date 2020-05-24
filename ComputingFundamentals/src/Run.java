@@ -11,7 +11,7 @@ import mx.tec.multiverseoptimization.Multiverse;
 public class Run {
 
     public static void main(String[] args) {
-        Multiverse multiverse = new Multiverse("Hola Universo");
+        Multiverse multiverse = new Multiverse("Hello Universe");
         
         multiverse.saluda();
 //        long seed;
