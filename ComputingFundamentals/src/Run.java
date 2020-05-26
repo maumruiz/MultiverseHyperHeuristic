@@ -1,19 +1,19 @@
-//import mx.tec.hermes.HyperHeuristic;
-//import mx.tec.hermes.frameworks.rulebased.RuleBasedHH;
-//import mx.tec.hermes.frameworks.rulebased.RuleBasedHHFramework;
-//import mx.tec.hermes.problems.ProblemSet;
-//import mx.tec.hermes.problems.ProblemSet.Subset;
-//import mx.tec.knapsack.problem.KP;
-//import mx.tec.metaheuristics.evolutionary.geneticAlgorithm.GeneticAlgorithm.Type;
+import mx.tec.hermes.HyperHeuristic;
+import mx.tec.hermes.frameworks.rulebased.RuleBasedHH;
+import mx.tec.hermes.frameworks.rulebased.RuleBasedHHFramework;
+import mx.tec.hermes.problems.ProblemSet;
+import mx.tec.hermes.problems.ProblemSet.Subset;
+import mx.tec.knapsack.problem.KP;
+import mx.tec.metaheuristics.evolutionary.geneticAlgorithm.GeneticAlgorithm.Type;
 
-import mx.tec.multiverseoptimization.Multiverse;
+import mx.tec.metaheuristics.multiverseoptimizer.MultiverseOptimizer;
 
 public class Run {
 
     public static void main(String[] args) {
-        Multiverse multiverse = new Multiverse("Hello Universe");
-        
+        MultiverseOptimizer multiverse = new MultiverseOptimizer("Hello Universe");
         multiverse.saluda();
+
 //        long seed;
 //        String setName;
 //        String[] features, heuristics;
