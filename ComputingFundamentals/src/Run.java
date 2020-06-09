@@ -6,6 +6,7 @@ import mx.tec.hermes.problems.ProblemSet;
 import mx.tec.hermes.problems.ProblemSet.Subset;
 import mx.tec.knapsack.problem.KP;
 import mx.tec.metaheuristics.evolutionary.geneticAlgorithm.GeneticAlgorithm.Type;
+import mx.tec.metaheuristics.evolutionary.multiverse.MultiverseAlgorithm;
 
 public class Run {
 
@@ -16,6 +17,10 @@ public class Run {
         KP problem;
         ProblemSet trainingSet, testSet;
         RuleBasedHH hyperHeuristic;
+        MultiverseAlgorithm multiverseAlgorithm = new MultiverseAlgorithm("Hola Universo");
+        
+        multiverseAlgorithm.saluda();
+        
         /*
          * Initializes the random number generator.
          */
@@ -59,15 +64,17 @@ public class Run {
         /*
          * Characterizes the instances in the test set.
          */
-        System.out.println(problem.characterize(testSet, features));
+//        System.out.println(problem.characterize(testSet, features));
         /*
          * Solves the test set by using the available heuristics.
          */
-        System.out.println(problem.solve(testSet, heuristics));
+//        System.out.println(problem.solve(testSet, heuristics));
         /*
          * Solves the test set by using the hyper-heuristic.
          */
         ///System.out.println(problem.solve(testSet, new HyperHeuristic[]{hyperHeuristic}));
+        
+        
     }
 
 }
