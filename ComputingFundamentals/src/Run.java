@@ -17,9 +17,7 @@ public class Run {
         KP problem;
         ProblemSet trainingSet, testSet;
         RuleBasedHH hyperHeuristic;
-        MultiverseAlgorithm multiverseAlgorithm = new MultiverseAlgorithm("Hola Universo");
-        
-        multiverseAlgorithm.saluda();
+        MultiverseAlgorithm multiverseAlgorithm = new MultiverseAlgorithm();
         
         /*
          * Initializes the random number generator.
@@ -56,23 +54,23 @@ public class Run {
         /*
          * Generates a new hyper-heuristic by using a genetic algorithm.
          */
-        //hyperHeuristic = RuleBasedHHFramework.runGeneticAlgorithm(problem, trainingSet, features, heuristics, 50, 2000, 0.9, 0.1, Type.GENERATIONAL, true, seed);                                
+        hyperHeuristic = RuleBasedHHFramework.runGeneticAlgorithm(problem, trainingSet, features, heuristics, 50, 2000, 0.9, 0.1, Type.GENERATIONAL, true, seed);
         /*
          * Saves the hyper-heuristic to a file (hyperHeuristic.xml).
          */
-        //hyperHeuristic.save("hyperHeuristic.xml");
+        hyperHeuristic.save("hyperHeuristic.xml");
         /*
          * Characterizes the instances in the test set.
          */
-//        System.out.println(problem.characterize(testSet, features));
+        System.out.println(problem.characterize(testSet, features));
         /*
          * Solves the test set by using the available heuristics.
          */
-//        System.out.println(problem.solve(testSet, heuristics));
+        System.out.println(problem.solve(testSet, heuristics));
         /*
          * Solves the test set by using the hyper-heuristic.
          */
-        ///System.out.println(problem.solve(testSet, new HyperHeuristic[]{hyperHeuristic}));
+        System.out.println(problem.solve(testSet, new HyperHeuristic[]{hyperHeuristic}));
         
         
     }
