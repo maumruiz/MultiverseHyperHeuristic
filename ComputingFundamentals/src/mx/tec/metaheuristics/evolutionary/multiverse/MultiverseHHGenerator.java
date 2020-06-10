@@ -5,6 +5,7 @@
  */
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
+import java.util.ArrayList;
 import java.util.Random;
 import mx.tec.metaheuristics.Generator;
 
@@ -31,5 +32,24 @@ public class MultiverseHHGenerator extends Generator{
         int nbRules;
         nbRules = MIN_INITIAL_RULES + random.nextInt(MAX_INITIAL_RULES - MIN_INITIAL_RULES);
         return new MultiverseHHIndividual(nbRules, BITS_PER_FEATURE, random.nextLong());
+    }
+    
+    public MultiverseHHIndividual bigBang() {
+        return generate();
+    }
+    
+    public ArrayList<MultiverseHHIndividual> multiBigBang(int size) {
+        if (size <= 0) {
+            System.out.println("The multiverse must contain at least one universe in order to run the multiverse algorithm.");
+            System.out.println("The system will halt.");
+            System.exit(1);
+        }
+        
+        ArrayList<MultiverseHHIndividual> multiverse = new ArrayList<MultiverseHHIndividual>(size);
+        for (int i = 0; i < size; i++) {
+            multiverse.add(bigBang());
+        }
+        
+        return multiverse;
     }
 }

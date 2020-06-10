@@ -7,8 +7,6 @@ package mx.tec.metaheuristics.evolutionary.multiverse;
 
 import java.util.List;
 import mx.tec.metaheuristics.Evaluator;
-import mx.tec.metaheuristics.Generator;
-import mx.tec.metaheuristics.Solution;
 import mx.tec.metaheuristics.evolutionary.Selector;
 
 /**
@@ -18,19 +16,22 @@ import mx.tec.metaheuristics.evolutionary.Selector;
 public class MultiverseAlgorithm {
     
     // TO DO: Change classes to the real ones (not the abstract ones)
-    private Solution best;
-    private List<Solution> population;
+    private MultiverseHHIndividual bestUniverse;
+    private List<MultiverseHHIndividual> multiverse;
+    
     private final Evaluator evaluator;
-    private final Generator generator;
+    private final MultiverseHHGenerator generator;
     private final Selector selector;
     
-    public MultiverseAlgorithm(Evaluator evaluator, Generator generator, Selector selector) {
+    public MultiverseAlgorithm(Evaluator evaluator, MultiverseHHGenerator generator, Selector selector) {
         this.evaluator = evaluator;
         this.generator = generator;
         this.selector = selector;
     }
     
-    public MultiverseHHIndividual evolve(int populationSize, long maxEvaluations, boolean printMode) {
+    public MultiverseHHIndividual evolve(int multiverseSize, long maxEvaluations, boolean printMode) {
+        this.multiverse = generator.multiBigBang(multiverseSize);
+        
         return null;
     }
 }

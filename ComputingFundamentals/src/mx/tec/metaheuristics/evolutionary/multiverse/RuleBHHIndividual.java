@@ -96,7 +96,7 @@ public class RuleBHHIndividual extends Solution{
      * 
      * @return The hyper-heuristic encoded within this individual.
      */
-    public HyperHeuristic getHyperHeuristic() {
+    public RuleBasedHH getHyperHeuristic() {
         int[] output = new int[numberOfRules];
         double[][] input = new double[numberOfRules][features.length];
         BitSet rule, featureBitSet, heuristicBitSet;

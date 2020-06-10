@@ -5,15 +5,14 @@
  */
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
+import java.util.ArrayList;
 import java.util.Random;
 import mx.tec.hermes.frameworks.HHEvaluator;
 import mx.tec.hermes.frameworks.rulebased.RuleBasedHH;
-import mx.tec.hermes.frameworks.rulebased.RuleBasedHHGenerator;
 import mx.tec.hermes.frameworks.rulebased.RuleBasedHHIndividual;
 import mx.tec.hermes.problems.Problem;
 import mx.tec.hermes.problems.ProblemSet;
 import mx.tec.metaheuristics.Evaluator;
-import mx.tec.metaheuristics.Generator;
 import mx.tec.metaheuristics.evolutionary.Selector;
 import mx.tec.metaheuristics.evolutionary.TournamentSelector;
 
@@ -34,7 +33,7 @@ public abstract class MultiverseFramework {
         
         // HyperHeuristic generator, evaluator and selector
         // TODO: change to class MultiverseGenerator, MultiverseEvaluator, MultiverseSelector
-        Generator generator = new RuleBasedHHGenerator(random.nextLong());
+        MultiverseHHGenerator generator = new MultiverseHHGenerator(random.nextLong());
         Evaluator evaluator = new HHEvaluator(problem, set);
         Selector selector = new TournamentSelector(3, random.nextLong());
 
@@ -42,16 +41,12 @@ public abstract class MultiverseFramework {
         MultiverseAlgorithm multiverse = new MultiverseAlgorithm(evaluator, generator, selector);
         
         // Evolve multiverse to get the best universe
-        // TODO: Universe class is a RuleBasedHHIndividual
-//        Universe bestUniverse = multiverse.evolve(populationSize, maxEvaluations, printMode);
+        MultiverseHHIndividual bestUniverse = multiverse.evolve(populationSize, maxEvaluations, printMode);
         
         // Get hyperheuristic from best universe
-        // TODO: implement method in Universe class
-//        RuleBasedHH hyperHeuristic = bestUniverse.getHyperHeuristic();
+        RuleBasedHH hyperHeuristic = bestUniverse.getHyperHeuristic();
         
-        
-        // TODO: return hyperheuristic
-        return null;
+        return hyperHeuristic;
     }
     
     public static void test(String[] features, String[] heuristics, long seed) {
@@ -63,10 +58,16 @@ public abstract class MultiverseFramework {
 //        MultiverseHHIndividual universe = new MultiverseHHIndividual(4,10,seed);
 //        String universeStr = universe.toString();
         
-        MultiverseHHGenerator generator = new MultiverseHHGenerator(random.nextLong());
-        MultiverseHHIndividual universe = generator.generate();
-        String universeStr = universe.toString();
+//        MultiverseHHGenerator generator = new MultiverseHHGenerator(random.nextLong());
+//        MultiverseHHIndividual universe = generator.generate();
+//        String universeStr = universe.toString();
         
-        System.out.println(universeStr.toString());
+        MultiverseHHGenerator generator = new MultiverseHHGenerator(random.nextLong());
+        ArrayList<MultiverseHHIndividual> multiverse = generator.multiBigBang(30);
+        
+        for (MultiverseHHIndividual universe : multiverse) {
+           System.out.println(universe.toString());
+        }
+//        System.out.println(universeStr.toString());
     }
 }
