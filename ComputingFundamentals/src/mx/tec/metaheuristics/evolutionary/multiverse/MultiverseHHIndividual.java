@@ -5,8 +5,6 @@
  */
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
-import mx.tec.metaheuristics.Solution;
-
 /**
  *
  * @author Mauricio

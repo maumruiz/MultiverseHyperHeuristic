@@ -44,7 +44,7 @@ public class RuleBHHIndividual extends Solution{
     /**
      * Creates a new instance of <code>RuleBasedHHIndividual</code>.
      * 
-     * @param nbGenes The number of genes in this individual.
+     * @param nbRules The number of genes in this individual.
      * @param bitsPerFeature The number of bits used to represent each feature.
      * @param seed The seed to initialize the random number generator.
      */
@@ -68,8 +68,11 @@ public class RuleBHHIndividual extends Solution{
                     individual.set(bitCounter++, bits.get(k));
                 }
             }
-            for (int j = 0; j < bitsPerHeuristic; j++) {
-                individual.set(bitCounter++, random.nextBoolean());
+            
+            int heuristicInt = random.nextInt(heuristics.length);               
+            bits = BitManipulator.toBitSet(heuristicInt);
+            for (int k = 0; k < bitsPerHeuristic; k++) {
+                individual.set(bitCounter++, bits.get(k));
             }
         }
     }
@@ -94,7 +97,7 @@ public class RuleBHHIndividual extends Solution{
      * @return The hyper-heuristic encoded within this individual.
      */
     public HyperHeuristic getHyperHeuristic() {
-        int[] output = new int[numberOfRules];;
+        int[] output = new int[numberOfRules];
         double[][] input = new double[numberOfRules][features.length];
         BitSet rule, featureBitSet, heuristicBitSet;
         
