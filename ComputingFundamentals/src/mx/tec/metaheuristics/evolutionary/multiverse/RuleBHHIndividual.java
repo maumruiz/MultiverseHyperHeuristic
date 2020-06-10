@@ -81,7 +81,7 @@ public class RuleBHHIndividual extends Solution{
      * 
      * @param individual The instance of <code>RuleBasedHHIndividual</code> to copy to this individual.
      */
-    private RuleBHHIndividual(RuleBHHIndividual other) {
+    public RuleBHHIndividual(RuleBHHIndividual other) {
         super(other.getEvaluation(), other.random.nextLong());
         numberOfRules = other.numberOfRules;
         bitsPerFeature = other.bitsPerFeature;

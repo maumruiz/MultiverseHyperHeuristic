@@ -18,7 +18,7 @@ import mx.tec.metaheuristics.evolutionary.TournamentSelector;
  */
 public abstract class MultiverseFramework {
            
-    public static RuleBasedHH run(Problem problem, ProblemSet set, String[] features, 
+    public static RuleBasedHH runMultiverseOptimizer(Problem problem, ProblemSet set, String[] features, 
             String[] heuristics, int populationSize, int maxEvaluations, double crossoverRate, 
             double mutationRate, boolean printMode, long seed) {
         Random random = new Random(seed);
@@ -37,7 +37,7 @@ public abstract class MultiverseFramework {
         MultiverseAlgorithm multiverse = new MultiverseAlgorithm(evaluator, generator, selector);
         
         // Evolve multiverse to get the best universe
-        MultiverseHHIndividual bestUniverse = multiverse.evolve(populationSize, maxEvaluations, printMode);
+        MultiverseHHIndividual bestUniverse = multiverse.run(populationSize, maxEvaluations, printMode);
         
         // Get hyperheuristic from best universe
         RuleBasedHH hyperHeuristic = bestUniverse.getHyperHeuristic();
@@ -56,6 +56,9 @@ public abstract class MultiverseFramework {
         Selector selector = new TournamentSelector(3, random.nextLong());
         
         MultiverseAlgorithm multiverse = new MultiverseAlgorithm(evaluator, generator, selector);
-        multiverse.evolve(10, seed, true);
+        MultiverseHHIndividual bestUniverse = multiverse.run(10, seed, true);
+        
+        System.out.println(bestUniverse.toString());
+        System.out.println(bestUniverse.getEvaluation());
     }
 }
