@@ -19,11 +19,11 @@ public class MultiverseAlgorithm {
     private MultiverseHHIndividual bestUniverse;
     private List<MultiverseHHIndividual> multiverse;
     
-    private final Evaluator evaluator;
+    private final MultiverseHHEvaluator evaluator;
     private final MultiverseHHGenerator generator;
     private final Selector selector;
     
-    public MultiverseAlgorithm(Evaluator evaluator, MultiverseHHGenerator generator, Selector selector) {
+    public MultiverseAlgorithm(MultiverseHHEvaluator evaluator, MultiverseHHGenerator generator, Selector selector) {
         this.evaluator = evaluator;
         this.generator = generator;
         this.selector = selector;
@@ -31,6 +31,13 @@ public class MultiverseAlgorithm {
     
     public MultiverseHHIndividual evolve(int multiverseSize, long maxEvaluations, boolean printMode) {
         this.multiverse = generator.multiBigBang(multiverseSize);
+        
+        double evaluation;
+        for (MultiverseHHIndividual universe : this.multiverse) {
+            evaluation = evaluator.evaluate(universe);
+            System.out.println(evaluation);
+            universe.setEvaluation(evaluation);
+        }
         
         return null;
     }

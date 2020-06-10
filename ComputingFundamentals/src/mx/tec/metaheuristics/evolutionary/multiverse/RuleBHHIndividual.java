@@ -7,7 +7,6 @@ package mx.tec.metaheuristics.evolutionary.multiverse;
 
 import java.text.DecimalFormat;
 import java.util.BitSet;
-import mx.tec.hermes.HyperHeuristic;
 import mx.tec.hermes.frameworks.rulebased.RuleBasedHH;
 import mx.tec.hermes.utils.BitManipulator;
 import mx.tec.metaheuristics.Solution;

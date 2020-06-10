@@ -79,7 +79,7 @@ public class Run {
         trainingSet = new ProblemSet(setName);
         testSet = new ProblemSet(setName);
         problem = new KP();
-        MultiverseFramework.test(features, heuristics, seed);
+        MultiverseFramework.test(features, heuristics, seed, problem, trainingSet);
     }
 
 }

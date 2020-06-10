@@ -5,14 +5,10 @@
  */
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
-import java.util.ArrayList;
 import java.util.Random;
-import mx.tec.hermes.frameworks.HHEvaluator;
 import mx.tec.hermes.frameworks.rulebased.RuleBasedHH;
-import mx.tec.hermes.frameworks.rulebased.RuleBasedHHIndividual;
 import mx.tec.hermes.problems.Problem;
 import mx.tec.hermes.problems.ProblemSet;
-import mx.tec.metaheuristics.Evaluator;
 import mx.tec.metaheuristics.evolutionary.Selector;
 import mx.tec.metaheuristics.evolutionary.TournamentSelector;
 
@@ -28,13 +24,13 @@ public abstract class MultiverseFramework {
         Random random = new Random(seed);
         
         // Set static features and heuristics for all individuals
-        RuleBasedHHIndividual.setFeatures(features);
-        RuleBasedHHIndividual.setHeuristics(heuristics);
+        MultiverseHHIndividual.setFeatures(features);
+        MultiverseHHIndividual.setHeuristics(heuristics);
         
         // HyperHeuristic generator, evaluator and selector
         // TODO: change to class MultiverseGenerator, MultiverseEvaluator, MultiverseSelector
         MultiverseHHGenerator generator = new MultiverseHHGenerator(random.nextLong());
-        Evaluator evaluator = new HHEvaluator(problem, set);
+        MultiverseHHEvaluator evaluator = new MultiverseHHEvaluator(problem, set);
         Selector selector = new TournamentSelector(3, random.nextLong());
 
         // Multiverse 
@@ -49,25 +45,17 @@ public abstract class MultiverseFramework {
         return hyperHeuristic;
     }
     
-    public static void test(String[] features, String[] heuristics, long seed) {
+    public static void test(String[] features, String[] heuristics, long seed, Problem problem, ProblemSet set) {
         Random random = new Random(seed);
         
         MultiverseHHIndividual.setFeatures(features);
         MultiverseHHIndividual.setHeuristics(heuristics);
         
-//        MultiverseHHIndividual universe = new MultiverseHHIndividual(4,10,seed);
-//        String universeStr = universe.toString();
-        
-//        MultiverseHHGenerator generator = new MultiverseHHGenerator(random.nextLong());
-//        MultiverseHHIndividual universe = generator.generate();
-//        String universeStr = universe.toString();
-        
         MultiverseHHGenerator generator = new MultiverseHHGenerator(random.nextLong());
-        ArrayList<MultiverseHHIndividual> multiverse = generator.multiBigBang(30);
+        MultiverseHHEvaluator evaluator = new MultiverseHHEvaluator(problem, set);
+        Selector selector = new TournamentSelector(3, random.nextLong());
         
-        for (MultiverseHHIndividual universe : multiverse) {
-           System.out.println(universe.toString());
-        }
-//        System.out.println(universeStr.toString());
+        MultiverseAlgorithm multiverse = new MultiverseAlgorithm(evaluator, generator, selector);
+        multiverse.evolve(10, seed, true);
     }
 }
