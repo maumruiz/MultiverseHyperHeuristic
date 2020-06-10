@@ -6,9 +6,7 @@
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
 import java.util.Random;
-import mx.tec.hermes.frameworks.rulebased.RuleBasedHHIndividual;
 import mx.tec.metaheuristics.Generator;
-import mx.tec.metaheuristics.Solution;
 
 /**
  *
@@ -29,7 +27,7 @@ public class MultiverseHHGenerator extends Generator{
     }
     
     @Override
-    public Solution generate() {
+    public MultiverseHHIndividual generate() {
         int nbRules;
         nbRules = MIN_INITIAL_RULES + random.nextInt(MAX_INITIAL_RULES - MIN_INITIAL_RULES);
         return new MultiverseHHIndividual(nbRules, BITS_PER_FEATURE, random.nextLong());

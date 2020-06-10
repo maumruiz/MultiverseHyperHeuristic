@@ -6,7 +6,6 @@
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
 import java.util.Random;
-import mx.tec.hermes.HyperHeuristic;
 import mx.tec.hermes.frameworks.HHEvaluator;
 import mx.tec.hermes.frameworks.rulebased.RuleBasedHH;
 import mx.tec.hermes.frameworks.rulebased.RuleBasedHHGenerator;
@@ -17,48 +16,13 @@ import mx.tec.metaheuristics.Evaluator;
 import mx.tec.metaheuristics.Generator;
 import mx.tec.metaheuristics.evolutionary.Selector;
 import mx.tec.metaheuristics.evolutionary.TournamentSelector;
-import mx.tec.metaheuristics.evolutionary.geneticAlgorithm.GeneticAlgorithm;
 
 /**
  *
  * @author Mauricio
  */
 public abstract class MultiverseFramework {
-    public static void test(String[] features, String[] heuristics, long seed) {
-        MultiverseHHIndividual.setFeatures(features);
-        MultiverseHHIndividual.setHeuristics(heuristics);
-        MultiverseHHIndividual universe = new MultiverseHHIndividual(4,10,seed);
-        String universeStr = universe.toString();
-        
-//        Random random = new Random(seed);
-//        Generator generator = new RuleBasedHHGenerator(random.nextLong());
-//        RuleBasedHHIndividual ind = (RuleBasedHHIndividual) generator.generate();
-        
-        
-        System.out.println(universeStr.toString());
-    }
-    
-    public static RuleBasedHH testPreviousWork(Problem problem, ProblemSet set, String[] features, String[] heuristics, int populationSize, int maxEvaluations, double crossoverRate, double mutationRate, GeneticAlgorithm.Type type, boolean printMode, long seed) {
-        Random random;
-        GeneticAlgorithm geneticAlgorithm;
-        Generator generator;
-        Evaluator evaluator;
-        Selector selector;
-        RuleBasedHHIndividual.setFeatures(features);
-        RuleBasedHHIndividual.setHeuristics(heuristics);
-        random = new Random(seed);
-        generator = new RuleBasedHHGenerator(random.nextLong());
-        evaluator = new HHEvaluator(problem, set);
-        selector = new TournamentSelector(3, random.nextLong());
-        geneticAlgorithm = new GeneticAlgorithm(evaluator, generator, selector);
-        RuleBasedHHIndividual rbi = (RuleBasedHHIndividual) geneticAlgorithm.run(populationSize, maxEvaluations, crossoverRate, mutationRate, type, printMode);
-        RuleBasedHH hh = (RuleBasedHH) rbi.getHyperHeuristic();
-        
-        System.out.println(rbi.toString());
-        System.out.println(hh.toString());
-        return hh;
-    }
-        
+           
     public static RuleBasedHH run(Problem problem, ProblemSet set, String[] features, 
             String[] heuristics, int populationSize, int maxEvaluations, double crossoverRate, 
             double mutationRate, boolean printMode, long seed) {
@@ -88,5 +52,21 @@ public abstract class MultiverseFramework {
         
         // TODO: return hyperheuristic
         return null;
+    }
+    
+    public static void test(String[] features, String[] heuristics, long seed) {
+        Random random = new Random(seed);
+        
+        MultiverseHHIndividual.setFeatures(features);
+        MultiverseHHIndividual.setHeuristics(heuristics);
+        
+//        MultiverseHHIndividual universe = new MultiverseHHIndividual(4,10,seed);
+//        String universeStr = universe.toString();
+        
+        MultiverseHHGenerator generator = new MultiverseHHGenerator(random.nextLong());
+        MultiverseHHIndividual universe = generator.generate();
+        String universeStr = universe.toString();
+        
+        System.out.println(universeStr.toString());
     }
 }
