@@ -5,14 +5,10 @@
  */
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
-import java.util.List;
 import java.util.Random;
 import mx.tec.hermes.frameworks.rulebased.RuleBasedHH;
 import mx.tec.hermes.problems.Problem;
 import mx.tec.hermes.problems.ProblemSet;
-import mx.tec.metaheuristics.Solution;
-import mx.tec.metaheuristics.evolutionary.Selector;
-import mx.tec.metaheuristics.evolutionary.TournamentSelector;
 
 /**
  *
@@ -35,7 +31,7 @@ public abstract class MultiverseFramework {
         MultiverseHHEvaluator evaluator = new MultiverseHHEvaluator(problem, set);
         RouletteWheelSelector selector = new RouletteWheelSelector(random.nextLong());
 
-        // Multiverse 
+        // Initialize Multiverse Optimizer
         MultiverseAlgorithm multiverseAlgorithm = new MultiverseAlgorithm(evaluator, generator, selector);
         
         // Evolve multiverse to get the best universe
@@ -58,7 +54,7 @@ public abstract class MultiverseFramework {
         RouletteWheelSelector selector = new RouletteWheelSelector(random.nextLong());
         
         MultiverseAlgorithm multiverseAlgorithm = new MultiverseAlgorithm(evaluator, generator, selector);
-        MultiverseHHIndividual bestUniverse = multiverseAlgorithm.run(10, seed, true);        
+        MultiverseHHIndividual bestUniverse = multiverseAlgorithm.run(30, 20, true);        
         
         
         System.out.println(bestUniverse.toString());

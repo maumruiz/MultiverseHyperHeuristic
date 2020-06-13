@@ -6,6 +6,7 @@
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import mx.tec.metaheuristics.Solution;
@@ -27,9 +28,11 @@ public class MultiverseAlgorithm {
     // Minimum and maximum Wormhole Existence Probability
     private double WEP_Max = 1.0;
     private double WEP_Min = 0.2;
+    private double WEP;
     
     // Coefficient used to calculate Travelling Distance Rate
     private double TDR_Coefficient = 6.0;
+    private double TDR;
     
     public MultiverseAlgorithm(MultiverseHHEvaluator evaluator, MultiverseHHGenerator generator, RouletteWheelSelector selector) {
         this.evaluator = evaluator;
@@ -52,6 +55,15 @@ public class MultiverseAlgorithm {
         Collections.sort(this.multiverse);
         bestUniverse = this.multiverse.get(0).copy();
         
+        // Set normalized inflation rates
+        double maxInflationRate = Math.abs(this.multiverse.get(0).getEvaluation());
+        double minInflationRate = Math.abs(this.multiverse.get(multiverseSize - 1).getEvaluation());
+        double normalizedEvaluation;
+        for (MultiverseHHIndividual universe : this.multiverse) {
+            normalizedEvaluation = evaluator.normalizedEvaluation(universe, maxInflationRate, minInflationRate);
+            universe.setNormalizedInflationRate(normalizedEvaluation);
+        }
+        
         return evolve(maxTime, printMode);
     }
     
@@ -69,35 +81,33 @@ public class MultiverseAlgorithm {
             printFitness(1, bestUniverse.getEvaluation(), averageFitness);
         }
         
-        Solution[] selected = selector.select(multiverse, 3);
-        
-        System.out.println("Selected universes:");
-        System.out.println(selected[0].getEvaluation());
-        System.out.println(selected[1].getEvaluation());
-        System.out.println(selected[2].getEvaluation());
-        
         // Main cycle to evolve universe
-//        int time = 2;
-//        while(time <= maxTime) {
-//            nextMultiverse = new ArrayList(multiverse.size());
-//            
-//            // Blackhole/whitehole tunnels
-//            
-//            // Wormwhole tunnels
-//            
-//            multiverse = nextMultiverse;
-//            Collections.sort(this.multiverse);
-//            if (multiverse.get(0).getEvaluation() < bestUniverse.getEvaluation()) {
-//                bestUniverse = multiverse.get(0).copy();
-//            }
-//            averageFitness /= multiverse.size();
-//            
-//            if(printMode) {
-//                printFitness(time, bestUniverse.getEvaluation(), averageFitness);
-//            }
-//            
-//            time++;
-//        }
+        int time = 2;
+        while(time <= maxTime) {
+            WEP = WEP_Min + time * ((WEP_Max - WEP_Min) / maxTime);
+            TDR = 1 - (Math.pow(time, (1/TDR_Coefficient)));
+            averageFitness = 0;
+            
+            for(MultiverseHHIndividual universe : multiverse) {
+                universe.blackWhiteHoleTunnel(multiverse, selector);
+//                universe.wormHoleTunnel();
+                
+                // Set new evaluation
+                double evaluation = evaluator.evaluate(universe);
+                universe.setEvaluation(evaluation);
+                averageFitness += universe.getEvaluation();
+            }
+            
+            Collections.sort(this.multiverse);
+            bestUniverse = this.multiverse.get(0).copy();
+            
+            if(printMode) {
+                averageFitness /= multiverse.size();
+                printFitness(time, bestUniverse.getEvaluation(), averageFitness);
+            }
+            
+            time++;
+        }
         
         return bestUniverse;
     }

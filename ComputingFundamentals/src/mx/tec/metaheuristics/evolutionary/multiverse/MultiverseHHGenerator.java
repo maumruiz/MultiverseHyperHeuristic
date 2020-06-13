@@ -15,7 +15,7 @@ import mx.tec.metaheuristics.Generator;
  */
 public class MultiverseHHGenerator extends Generator{
     // TODO: Consider generation without bits, but doubles
-    private final static int MIN_INITIAL_RULES = 3, MAX_INITIAL_RULES = 5, BITS_PER_FEATURE = 10;
+    private final static int MIN_INITIAL_RULES = 3, MAX_INITIAL_RULES = 6, BITS_PER_FEATURE = 10;
     private final Random random;
     
     /**
@@ -45,7 +45,7 @@ public class MultiverseHHGenerator extends Generator{
             System.exit(1);
         }
         
-        ArrayList<MultiverseHHIndividual> multiverse = new ArrayList<MultiverseHHIndividual>(size);
+        ArrayList<MultiverseHHIndividual> multiverse = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             multiverse.add(bigBang());
         }

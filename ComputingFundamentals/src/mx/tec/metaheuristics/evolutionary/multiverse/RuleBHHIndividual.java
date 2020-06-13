@@ -16,11 +16,11 @@ import mx.tec.metaheuristics.Solution;
  * @author Mauricio
  */
 public class RuleBHHIndividual extends Solution{
-    private int numberOfRules;
-    private final int bitsPerRule, bitsPerFeature, bitsPerHeuristic;
-    private final BitSet individual;
-    private static final double MIN_VALUE = -0.10, MAX_VALUE = 1.10;
-    private static String[] features = new String[0], heuristics = new String[0];
+    protected int numberOfRules;
+    protected final int bitsPerRule, bitsPerFeature, bitsPerHeuristic;
+    protected final BitSet individual;
+    protected static final double MIN_VALUE = -0.10, MAX_VALUE = 1.10;
+    protected static String[] features = new String[0], heuristics = new String[0];
     
     /**
      * Sets the heuristics to be used by all the individuals.
