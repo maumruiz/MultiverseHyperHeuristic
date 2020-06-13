@@ -58,4 +58,9 @@ public class MultiverseHHEvaluator extends Evaluator {
         }
         return objValue / problems.size();
     }
+    
+    public double normalizedEvaluation(Solution solution, double max, double min) {
+        double absValue = Math.abs(solution.getEvaluation());
+        return (absValue - min) / (max - min);
+    }
 }
