@@ -72,4 +72,12 @@ public final class BitManipulator {
         stepSize = (MAX_VALUE - MIN_VALUE) / Math.pow(2, numberOfBits);
         return toBitSet((int) Math.round((value + Math.abs(MIN_VALUE + stepSize / 2)) / stepSize));
     }
+    
+    public static String toString(BitSet bitset) {
+        StringBuilder tempString = new StringBuilder();
+        for(int i = 0; i < bitset.length(); i++){
+            tempString.append(bitset.get(i) ? "1" : "0");
+        }
+        return tempString.toString();
+    }
 }
