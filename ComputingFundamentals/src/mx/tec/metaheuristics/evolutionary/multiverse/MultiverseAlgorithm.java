@@ -98,8 +98,18 @@ public class MultiverseAlgorithm {
                 averageFitness += universe.getEvaluation();
             }
             
+            // Sort universes
             Collections.sort(this.multiverse);
             bestUniverse = this.multiverse.get(0).copy();
+            
+            // Set normalized inflation rates
+            double maxInflationRate = Math.abs(this.multiverse.get(0).getEvaluation());
+            double minInflationRate = Math.abs(this.multiverse.get(this.multiverse.size() - 1).getEvaluation());
+            double normalizedEvaluation;
+            for (MultiverseHHIndividual universe : this.multiverse) {
+                normalizedEvaluation = evaluator.normalizedEvaluation(universe, maxInflationRate, minInflationRate);
+                universe.setNormalizedInflationRate(normalizedEvaluation);
+            }
             
             if(printMode) {
                 averageFitness /= multiverse.size();
@@ -114,6 +124,6 @@ public class MultiverseAlgorithm {
     
     public void printFitness(int iteration, double best, double average) {
         DecimalFormat decimalFormat = new DecimalFormat("0.0000");
-        System.out.println("Generation: " + (iteration + 1) + "    Best: " + decimalFormat.format(best) + "    Average: " + decimalFormat.format(average));
+        System.out.println("Generation: " + (iteration) + "    Best: " + decimalFormat.format(best) + "    Average: " + decimalFormat.format(average));
     }
 }
