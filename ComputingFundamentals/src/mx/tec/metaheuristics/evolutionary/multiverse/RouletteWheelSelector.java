@@ -5,7 +5,6 @@
  */
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import mx.tec.metaheuristics.Solution;

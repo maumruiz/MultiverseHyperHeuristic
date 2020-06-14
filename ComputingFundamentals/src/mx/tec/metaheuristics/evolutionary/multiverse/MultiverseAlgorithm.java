@@ -6,10 +6,8 @@
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import mx.tec.metaheuristics.Solution;
 
 /**
  *
@@ -69,7 +67,6 @@ public class MultiverseAlgorithm {
     
     public MultiverseHHIndividual evolve(long maxTime, boolean printMode) {
         double averageFitness = 0;
-        List<MultiverseHHIndividual> nextMultiverse;
         
         // Get first average fitness
         for (MultiverseHHIndividual universe : multiverse) {
@@ -86,16 +83,21 @@ public class MultiverseAlgorithm {
         while(time <= maxTime) {
             WEP = WEP_Min + time * ((WEP_Max - WEP_Min) / maxTime);
             TDR = 1 - (Math.pow(time, (1/TDR_Coefficient)));
+            int blackHoleIndex = 0;
             averageFitness = 0;
             
             for(MultiverseHHIndividual universe : multiverse) {
                 universe.blackWhiteHoleTunnel(multiverse, selector);
-//                universe.wormHoleTunnel();
+                
+                if(blackHoleIndex > 0) {
+                    universe.wormHoleTunnel(WEP, TDR, bestUniverse);    
+                }
                 
                 // Set new evaluation
                 double evaluation = evaluator.evaluate(universe);
                 universe.setEvaluation(evaluation);
                 averageFitness += universe.getEvaluation();
+                blackHoleIndex++;
             }
             
             // Sort universes

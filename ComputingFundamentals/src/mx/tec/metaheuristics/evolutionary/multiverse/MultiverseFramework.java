@@ -9,7 +9,6 @@ import java.util.Random;
 import mx.tec.hermes.frameworks.rulebased.RuleBasedHH;
 import mx.tec.hermes.problems.Problem;
 import mx.tec.hermes.problems.ProblemSet;
-import mx.tec.hermes.utils.BitManipulator;
 
 /**
  *

@@ -79,7 +79,7 @@ public class RuleBHHIndividual extends Solution{
     /**
      * Creates a new instance of <code>RuleBasedHHIndividual</code>.
      * 
-     * @param individual The instance of <code>RuleBasedHHIndividual</code> to copy to this individual.
+     * @param other The instance of <code>RuleBasedHHIndividual</code> to copy to this individual.
      */
     public RuleBHHIndividual(RuleBHHIndividual other) {
         super(other.getEvaluation(), other.random.nextLong());
