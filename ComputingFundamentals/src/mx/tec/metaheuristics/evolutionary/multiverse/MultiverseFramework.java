@@ -54,8 +54,8 @@ public abstract class MultiverseFramework {
         RouletteWheelSelector selector = new RouletteWheelSelector(random.nextLong());
         
         MultiverseAlgorithm multiverseAlgorithm = new MultiverseAlgorithm(evaluator, generator, selector);
-        MultiverseHHIndividual bestUniverse = multiverseAlgorithm.run(30, 20, true);        
-        
+        MultiverseHHIndividual bestUniverse = multiverseAlgorithm.run(30, 20, true);
+
         System.out.println(bestUniverse.toString());
         System.out.println(bestUniverse.getEvaluation());
     }

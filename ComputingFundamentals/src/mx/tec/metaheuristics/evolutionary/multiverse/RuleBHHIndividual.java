@@ -6,9 +6,7 @@
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
 import java.text.DecimalFormat;
-import java.util.BitSet;
 import mx.tec.hermes.frameworks.rulebased.RuleBasedHH;
-import mx.tec.hermes.utils.BitManipulator;
 import mx.tec.metaheuristics.Solution;
 
 /**
@@ -18,7 +16,7 @@ import mx.tec.metaheuristics.Solution;
 public class RuleBHHIndividual extends Solution{
     protected int numberOfRules;
     protected final int bitsPerRule, bitsPerFeature, bitsPerHeuristic;
-    protected final BitSet individual;
+    protected final Rule[] rules;
     protected static final double MIN_VALUE = -0.10, MAX_VALUE = 1.10;
     protected static String[] features = new String[0], heuristics = new String[0];
     
@@ -49,30 +47,24 @@ public class RuleBHHIndividual extends Solution{
      */
     public RuleBHHIndividual(int nbRules, int bitsPerFeature, long seed) {
         super(0, seed);
-        int bitCounter;
-        BitSet bits;
         
         this.numberOfRules = nbRules;
         this.bitsPerFeature = bitsPerFeature;
         bitsPerHeuristic = (int) Math.ceil(Math.log(heuristics.length) / Math.log(2));
         this.bitsPerRule = bitsPerFeature * features.length + bitsPerHeuristic;
         
-        bitCounter = 0;
-        individual = new BitSet();
+        rules = new Rule[nbRules];
         for (int i = 0; i < nbRules; i++) {
-            for (String feature : features) {
-                double temp = random.nextDouble();
-                bits = BitManipulator.toBitSet(temp, bitsPerFeature, MIN_VALUE, MAX_VALUE);
-                for (int k = 0; k < bitsPerFeature; k++) {
-                    individual.set(bitCounter++, bits.get(k));
-                }
+            double[] tempFeatures = new double[features.length];
+            for (int j = 0; j < features.length; j++) {
+                double temp = (random.nextDouble() * (MAX_VALUE - MIN_VALUE)) + MIN_VALUE;
+                tempFeatures[j] = temp;
             }
             
-            int heuristicInt = random.nextInt(heuristics.length);               
-            bits = BitManipulator.toBitSet(heuristicInt);
-            for (int k = 0; k < bitsPerHeuristic; k++) {
-                individual.set(bitCounter++, bits.get(k));
-            }
+            int heuristicInt = random.nextInt(heuristics.length);
+            
+            Rule tempRule = new Rule(tempFeatures, heuristicInt);
+            rules[i] = tempRule;
         }
     }
     
@@ -87,7 +79,15 @@ public class RuleBHHIndividual extends Solution{
         bitsPerFeature = other.bitsPerFeature;
         bitsPerHeuristic = other.bitsPerHeuristic;
         bitsPerRule = bitsPerFeature * features.length + bitsPerHeuristic;
-        individual = (BitSet) other.individual.clone();
+        
+        Rule[] tmpRule = new Rule[other.rules.length];
+        for (int i = 0; i < other.rules.length; i++) {
+            double[] tempFeatures = other.rules[i].getFeaturesCopy();
+            int heuristicInt = other.rules[i].heuristicValue;
+            Rule tempRule = new Rule(tempFeatures, heuristicInt);
+            tmpRule[i] = tempRule;
+        }
+        rules = tmpRule;
     }
     
     /**
@@ -98,16 +98,13 @@ public class RuleBHHIndividual extends Solution{
     public RuleBasedHH getHyperHeuristic() {
         int[] output = new int[numberOfRules];
         double[][] input = new double[numberOfRules][features.length];
-        BitSet rule, featureBitSet, heuristicBitSet;
         
         for (int i = 0; i < numberOfRules; i++) {
-            rule = individual.get(i * bitsPerRule, (i + 1) * bitsPerRule);
             for (int j = 0; j < features.length; j++) {
-                featureBitSet = rule.get(j * bitsPerFeature, (j + 1) * bitsPerFeature);
-                input[i][j] = BitManipulator.toDouble(featureBitSet, bitsPerFeature, MIN_VALUE, MAX_VALUE);
+                input[i][j] = rules[i].featuresValues[j];
             }
-            heuristicBitSet = rule.get(bitsPerFeature * features.length, bitsPerFeature * features.length + bitsPerHeuristic);
-            output[i] = BitManipulator.toInteger(heuristicBitSet) % heuristics.length;
+            
+            output[i] = rules[i].heuristicValue;
         }
         return new RuleBasedHH(features, heuristics, input, output);
     }
@@ -128,13 +125,12 @@ public class RuleBHHIndividual extends Solution{
     
     @Override
     public String toString() {
-        BitSet rule;
-        StringBuilder string;
-        string = new StringBuilder();
+        Rule rule;
+        StringBuilder string = new StringBuilder();
         
         for (int i = 0; i < numberOfRules; i++) {
             string.append("[");
-            rule = individual.get(i * bitsPerRule, (i + 1) * bitsPerRule);
+            rule = rules[i];
             string.append(toString(rule));
             string.deleteCharAt(string.length() - 1);
             string.append("]\n");
@@ -148,31 +144,20 @@ public class RuleBHHIndividual extends Solution{
      * @param bits The bitset whose string representation is required.
      * @return The string representation of the gene provided.
      */
-    private String toString(BitSet bits) {
-        BitSet featureBitSet, heuristicBitSet;
+    private String toString(Rule rule) {
         DecimalFormat format;
         format = new DecimalFormat("0.00000");
-        StringBuilder string, tempString;
+        StringBuilder string;
         string = new StringBuilder();
         
         for (int i = 0; i < features.length; i++) {
-            featureBitSet = bits.get(i * bitsPerFeature, (i + 1) * bitsPerFeature);
-            tempString = new StringBuilder();
-            for (int j = 0; j < bitsPerFeature; j++) {
-                tempString.append(featureBitSet.get(j) ? "1" : "0");
-            }
-            string.append(tempString.reverse().toString())
-                    .append(" (")
-                    .append(format.format(BitManipulator.toDouble(featureBitSet, bitsPerFeature, MIN_VALUE, MAX_VALUE)))
+            string.append(" (")
+                    .append(format.format(rule.featuresValues[i]))
                     .append(") ");
         }
-        tempString = new StringBuilder();
-        heuristicBitSet = bits.get(bitsPerFeature * features.length, bitsPerFeature * features.length + bitsPerHeuristic);
-        for (int i = 0; i < bitsPerHeuristic; i++) {
-            tempString.append(heuristicBitSet.get(i) ? "1" : "0");
-        }
-        string.append(tempString.reverse().toString())
-                .append(" (").append(BitManipulator.toInteger(heuristicBitSet)).append(") ");
+        
+        
+        string.append(" (").append(rule.heuristicValue).append(") ");
         return string.toString();
     }
 }
