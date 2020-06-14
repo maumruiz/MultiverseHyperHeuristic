@@ -23,8 +23,8 @@ Feel free to add any comments in this section
 		<heuristic name="MARKOVITZ"/>
 	</heuristics>
 	<rules nbRules="3">
-		<rule condition="0.98340 1.04551 0.00840 0.95645 0.23457 0.05645 0.32246 0.71152 0.17480 0.21816" action="2"/>
-		<rule condition="1.08418 0.09395 0.30840 0.96582 0.41152 0.45371 0.52402 0.55215 0.45957 0.07988" action="1"/>
-		<rule condition="0.37168 0.56621 -0.08535 0.92598 0.10566 0.04121 0.92949 0.85918 0.35410 0.47363" action="2"/>
+		<rule condition="0.32129 0.99160 0.66230 0.02012 0.40449 0.54746 0.66348 0.25449 0.34473 0.75723" action="2"/>
+		<rule condition="-0.03379 0.01777 0.14551 0.34355 0.09395 -0.01387 0.38223 0.12910 1.09707 0.93418" action="1"/>
+		<rule condition="0.68809 0.46777 0.27559 0.18418 0.49004 1.04668 0.05293 0.25918 0.82051 0.54043" action="1"/>
 	</rules>
 </distance-based-heuristic-selector>

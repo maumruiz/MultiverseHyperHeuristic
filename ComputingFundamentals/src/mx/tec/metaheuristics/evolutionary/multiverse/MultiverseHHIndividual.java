@@ -79,7 +79,7 @@ public class MultiverseHHIndividual extends RuleBHHIndividual {
             }
 
             double wormHoleExistence = random.nextDouble();
-            if (wormHoleExistence < WEP / 2) {
+            if (wormHoleExistence < WEP) {
                 double interstellarTravel = random.nextDouble();
                 double lightYears = random.nextDouble();
 

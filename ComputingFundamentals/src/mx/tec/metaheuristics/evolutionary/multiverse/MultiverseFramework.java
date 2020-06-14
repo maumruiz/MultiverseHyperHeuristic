@@ -17,8 +17,7 @@ import mx.tec.hermes.problems.ProblemSet;
 public abstract class MultiverseFramework {
            
     public static RuleBasedHH runMultiverseOptimizer(Problem problem, ProblemSet set, String[] features, 
-            String[] heuristics, int populationSize, int maxEvaluations, double crossoverRate, 
-            double mutationRate, boolean printMode, long seed) {
+            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long seed) {
         Random random = new Random(seed);
         
         // Set static features and heuristics for all individuals
@@ -37,26 +36,14 @@ public abstract class MultiverseFramework {
         // Evolve multiverse to get the best universe
         MultiverseHHIndividual bestUniverse = multiverseAlgorithm.run(populationSize, maxEvaluations, printMode);
         
+        if(printMode) {
+            System.out.println(bestUniverse.toString());
+            System.out.println("Best Universe Evaluation: " + bestUniverse.getEvaluation());
+        }
+        
         // Get hyperheuristic from best universe
         RuleBasedHH hyperHeuristic = bestUniverse.getHyperHeuristic();
         
         return hyperHeuristic;
-    }
-    
-    public static void test(String[] features, String[] heuristics, long seed, Problem problem, ProblemSet set) {
-        Random random = new Random(seed);
-        
-        MultiverseHHIndividual.setFeatures(features);
-        MultiverseHHIndividual.setHeuristics(heuristics);
-        
-        MultiverseHHGenerator generator = new MultiverseHHGenerator(random.nextLong());
-        MultiverseHHEvaluator evaluator = new MultiverseHHEvaluator(problem, set);
-        RouletteWheelSelector selector = new RouletteWheelSelector(random.nextLong());
-        
-        MultiverseAlgorithm multiverseAlgorithm = new MultiverseAlgorithm(evaluator, generator, selector);
-        MultiverseHHIndividual bestUniverse = multiverseAlgorithm.run(50, 20, true);
-
-        System.out.println(bestUniverse.toString());
-        System.out.println(bestUniverse.getEvaluation());
     }
 }

@@ -12,49 +12,29 @@ import mx.tec.metaheuristics.evolutionary.multiverse.MultiverseFramework;
 public class Run {
 
     public static void main(String[] args) {
-        long seed;
-        String setName;
-        String[] features, heuristics;
-        KP problem;
-        ProblemSet trainingSet, testSet;
+        String setName = "instances/Training set";;
+        String[] heuristics = heuristics = new String[]{"DEFAULT", "MAX_PROFIT", "MAX_PROFIT/WEIGHT", "MIN_WEIGHT", "MARKOVITZ"};
+        KP problem = new KP();
+        ProblemSet trainingSet = new ProblemSet(setName);
         RuleBasedHH hyperHeuristic;
+
+//        String[] features = new String[]{"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_STD_WEIGHT", "NORM_STD_PROFIT", "NORM_STD_PROFIT_WEIGHT", "NORM_CORRELATION"};
         
-//        /*
-//         * Initializes the random number generator.
-//         */
-//        seed = 12345;
-//        /*
-//         * Defines the features to characterize the knapsack instances. You can use all of them or only a subset of
-//         * them.
-//         */
-//        features = new String[]{"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_STD_WEIGHT", "NORM_STD_PROFIT", "NORM_STD_PROFIT_WEIGHT", "NORM_CORRELATION"};
-//        /*
-//         * Defines the heuristics to select the next item. You should let your system to decide which ones to apply. In
-//         * other words, use all of them as input for your system.
-//         */
-//        heuristics = new String[]{"DEFAULT", "MAX_PROFIT", "MAX_PROFIT/WEIGHT", "MIN_WEIGHT", "MARKOVITZ"};
-//        /*
-//         * Defines the folder that contains the instances to be considered for this run.
-//         */
-//        setName = "instances/Training set";
-//        /*
-//         * Defines the instances to be used for training (60% of the instances in the folder).
-//         */
-//        //trainingSet = new ProblemSet(setName, Subset.TRAIN, 0.60, seed);
-//        trainingSet = new ProblemSet(setName);
-//        /*
-//         * Defines the instances to be used for testing (the remaining 40% of the instances in the folder).
-//         */
-//        //testSet = new ProblemSet(setName, Subset.TEST, 0.60, seed);
-//        testSet = new ProblemSet(setName);
-//        /*
-//         * Creates an empty instance of the knapsack problem.
-//         */
-//        problem = new KP();
-//        /*
-//         * Generates a new hyper-heuristic by using a genetic algorithm.
-//         */
-//        hyperHeuristic = RuleBasedHHFramework.runGeneticAlgorithm(problem, trainingSet, features, heuristics, 50, 1000, 0.9, 0.1, Type.GENERATIONAL, true, seed);
+        long[] testSeeds = {12345, 55555, 97563, 41528};
+        String[][] testFeatures = {
+            {"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_STD_WEIGHT", "NORM_STD_PROFIT", "NORM_STD_PROFIT_WEIGHT", "NORM_CORRELATION"},
+            {"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_CORRELATION"},
+            {"NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_CORRELATION"},
+            {"NORM_STD_WEIGHT", "NORM_STD_PROFIT", "NORM_STD_PROFIT_WEIGHT", "NORM_CORRELATION"}
+        };
+
+        for (long seed : testSeeds) {
+            for(String[] features : testFeatures) {
+                //        hyperHeuristic = RuleBasedHHFramework.runGeneticAlgorithm(problem, trainingSet, features, heuristics, 50, 1000, 0.9, 0.1, Type.GENERATIONAL, true, seed);
+                hyperHeuristic = MultiverseFramework.runMultiverseOptimizer(problem, trainingSet, features, heuristics, 50, 20, true, seed);
+            }
+        }
+
 //        /*
 //         * Saves the hyper-heuristic to a file (hyperHeuristic.xml).
 //         */
@@ -71,59 +51,5 @@ public class Run {
 //         * Solves the test set by using the hyper-heuristic.
 //         */
 //        System.out.println(problem.solve(testSet, new HyperHeuristic[]{hyperHeuristic}));
-
-        
-        seed = 55555;
-        features = new String[]{"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_STD_WEIGHT", "NORM_STD_PROFIT", "NORM_STD_PROFIT_WEIGHT", "NORM_CORRELATION"};
-        heuristics = new String[]{"DEFAULT", "MAX_PROFIT", "MAX_PROFIT/WEIGHT", "MIN_WEIGHT", "MARKOVITZ"};
-        setName = "instances/Training set";
-        trainingSet = new ProblemSet(setName);
-        testSet = new ProblemSet(setName);
-        problem = new KP();
-        MultiverseFramework.test(features, heuristics, seed, problem, trainingSet);
-        
-//        seed = 99999;
-//        features = new String[]{"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_STD_WEIGHT", "NORM_STD_PROFIT", "NORM_STD_PROFIT_WEIGHT", "NORM_CORRELATION"};
-//        heuristics = new String[]{"DEFAULT", "MAX_PROFIT", "MAX_PROFIT/WEIGHT", "MIN_WEIGHT", "MARKOVITZ"};
-//        setName = "instances/Training set";
-//        trainingSet = new ProblemSet(setName);
-//        testSet = new ProblemSet(setName);
-//        problem = new KP();
-//        MultiverseFramework.test(features, heuristics, seed, problem, trainingSet);
-//        
-//        
-//        // Sin std dev ///////////////////////////////////////////////////////
-//        
-//        seed = 48612;
-//        features = new String[]{"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_CORRELATION"};
-//        heuristics = new String[]{"DEFAULT", "MAX_PROFIT", "MAX_PROFIT/WEIGHT", "MIN_WEIGHT", "MARKOVITZ"};
-//        setName = "instances/Training set";
-//        trainingSet = new ProblemSet(setName);
-//        testSet = new ProblemSet(setName);
-//        problem = new KP();
-//        MultiverseFramework.test(features, heuristics, seed, problem, trainingSet);
-//
-//        
-//        seed = 48612;
-//        features = new String[]{"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_CORRELATION"};
-//        heuristics = new String[]{"DEFAULT", "MAX_PROFIT", "MAX_PROFIT/WEIGHT", "MIN_WEIGHT", "MARKOVITZ"};
-//        setName = "instances/Training set";
-//        trainingSet = new ProblemSet(setName);
-//        testSet = new ProblemSet(setName);
-//        problem = new KP();
-//        MultiverseFramework.test(features, heuristics, seed, problem, trainingSet);
-//
-//        
-//        // Sin mean ///////////////////////////////////////////////////////
-//
-//        
-//        seed = 99999;
-//        features = new String[]{"NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_CORRELATION"};
-//        heuristics = new String[]{"DEFAULT", "MAX_PROFIT", "MAX_PROFIT/WEIGHT", "MIN_WEIGHT", "MARKOVITZ"};
-//        setName = "instances/Training set";
-//        trainingSet = new ProblemSet(setName);
-//        testSet = new ProblemSet(setName);
-//        problem = new KP();
-//        MultiverseFramework.test(features, heuristics, seed, problem, trainingSet);
     }
 }
