@@ -29,7 +29,7 @@ public class MultiverseAlgorithm {
     private double WEP;
     
     // Coefficient used to calculate Travelling Distance Rate
-    private double TDR_Coefficient = 6.0;
+    private double TDR_Coefficient = 4.0;
     private double TDR;
     
     public MultiverseAlgorithm(MultiverseHHEvaluator evaluator, MultiverseHHGenerator generator, RouletteWheelSelector selector) {
@@ -75,14 +75,16 @@ public class MultiverseAlgorithm {
         averageFitness /= multiverse.size();
         
         if(printMode) {
-            printFitness(1, bestUniverse.getEvaluation(), averageFitness);
+            printFitness(-1, bestUniverse.getEvaluation(), averageFitness);
         }
         
         // Main cycle to evolve universe
-        int time = 2;
+        int time = 0;
         while(time <= maxTime) {
             WEP = WEP_Min + time * ((WEP_Max - WEP_Min) / maxTime);
-            TDR = 1 - (Math.pow(time, (1/TDR_Coefficient)));
+            TDR = 1 - (Math.pow(time, (1/TDR_Coefficient)) / Math.pow(maxTime, (1/TDR_Coefficient)));
+            System.out.println("WEP: " + WEP);
+            System.out.println("TDR: " + TDR);
             int blackHoleIndex = 0;
             averageFitness = 0;
             

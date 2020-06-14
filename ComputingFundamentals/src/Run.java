@@ -54,7 +54,7 @@ public class Run {
 //        /*
 //         * Generates a new hyper-heuristic by using a genetic algorithm.
 //         */
-//        hyperHeuristic = RuleBasedHHFramework.runGeneticAlgorithm(problem, trainingSet, features, heuristics, 50, 2000, 0.9, 0.1, Type.GENERATIONAL, true, seed);
+//        hyperHeuristic = RuleBasedHHFramework.runGeneticAlgorithm(problem, trainingSet, features, heuristics, 50, 1000, 0.9, 0.1, Type.GENERATIONAL, true, seed);
 //        /*
 //         * Saves the hyper-heuristic to a file (hyperHeuristic.xml).
 //         */
@@ -72,7 +72,8 @@ public class Run {
 //         */
 //        System.out.println(problem.solve(testSet, new HyperHeuristic[]{hyperHeuristic}));
 
-        seed = 12345;
+        
+        seed = 55555;
         features = new String[]{"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_STD_WEIGHT", "NORM_STD_PROFIT", "NORM_STD_PROFIT_WEIGHT", "NORM_CORRELATION"};
         heuristics = new String[]{"DEFAULT", "MAX_PROFIT", "MAX_PROFIT/WEIGHT", "MIN_WEIGHT", "MARKOVITZ"};
         setName = "instances/Training set";
@@ -80,5 +81,49 @@ public class Run {
         testSet = new ProblemSet(setName);
         problem = new KP();
         MultiverseFramework.test(features, heuristics, seed, problem, trainingSet);
+        
+//        seed = 99999;
+//        features = new String[]{"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_STD_WEIGHT", "NORM_STD_PROFIT", "NORM_STD_PROFIT_WEIGHT", "NORM_CORRELATION"};
+//        heuristics = new String[]{"DEFAULT", "MAX_PROFIT", "MAX_PROFIT/WEIGHT", "MIN_WEIGHT", "MARKOVITZ"};
+//        setName = "instances/Training set";
+//        trainingSet = new ProblemSet(setName);
+//        testSet = new ProblemSet(setName);
+//        problem = new KP();
+//        MultiverseFramework.test(features, heuristics, seed, problem, trainingSet);
+//        
+//        
+//        // Sin std dev ///////////////////////////////////////////////////////
+//        
+//        seed = 48612;
+//        features = new String[]{"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_CORRELATION"};
+//        heuristics = new String[]{"DEFAULT", "MAX_PROFIT", "MAX_PROFIT/WEIGHT", "MIN_WEIGHT", "MARKOVITZ"};
+//        setName = "instances/Training set";
+//        trainingSet = new ProblemSet(setName);
+//        testSet = new ProblemSet(setName);
+//        problem = new KP();
+//        MultiverseFramework.test(features, heuristics, seed, problem, trainingSet);
+//
+//        
+//        seed = 48612;
+//        features = new String[]{"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_CORRELATION"};
+//        heuristics = new String[]{"DEFAULT", "MAX_PROFIT", "MAX_PROFIT/WEIGHT", "MIN_WEIGHT", "MARKOVITZ"};
+//        setName = "instances/Training set";
+//        trainingSet = new ProblemSet(setName);
+//        testSet = new ProblemSet(setName);
+//        problem = new KP();
+//        MultiverseFramework.test(features, heuristics, seed, problem, trainingSet);
+//
+//        
+//        // Sin mean ///////////////////////////////////////////////////////
+//
+//        
+//        seed = 99999;
+//        features = new String[]{"NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_CORRELATION"};
+//        heuristics = new String[]{"DEFAULT", "MAX_PROFIT", "MAX_PROFIT/WEIGHT", "MIN_WEIGHT", "MARKOVITZ"};
+//        setName = "instances/Training set";
+//        trainingSet = new ProblemSet(setName);
+//        testSet = new ProblemSet(setName);
+//        problem = new KP();
+//        MultiverseFramework.test(features, heuristics, seed, problem, trainingSet);
     }
 }

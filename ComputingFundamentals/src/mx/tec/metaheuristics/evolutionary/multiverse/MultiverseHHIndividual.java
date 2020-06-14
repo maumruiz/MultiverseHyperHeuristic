@@ -69,41 +69,33 @@ public class MultiverseHHIndividual extends RuleBHHIndividual {
                     double bestUniverseValue = bestUniverse.rules[index].featuresValues[j];
                     
                     if (interstellarTravel < 0.5) {
-                        newValue = bestUniverseValue + TDR * ((MAX_VALUE - MIN_VALUE) * lightYears + MIN_VALUE);
+                        newValue = bestUniverseValue + (TDR * lightYears - 1) * (bestUniverseValue - MIN_VALUE);
                     } else {
-                        newValue = bestUniverseValue - TDR * ((MAX_VALUE - MIN_VALUE) * lightYears + MIN_VALUE);
+                        newValue = bestUniverseValue + (1 - TDR * lightYears) * (MAX_VALUE - bestUniverseValue);
                     }
 
                     rules[i].featuresValues[j] = newValue;
                 }
             }
 
-//            double wormHoleExistence = random.nextDouble();
-//            if (wormHoleExistence < WEP) {
-//                double interstellarTravel = random.nextDouble();
-//                double lightYears = random.nextDouble();
-//
-//                // Get new feature value
-//                double newValue;
-//                BitSet bestUniverseHeuristic = getHeuristic(bestUniverse, i);
-//                double bestUniverseValue = BitManipulator.toDouble(bestUniverseHeuristic, bitsPerHeuristic, heuristics.length - 1, 0);
-//                if (interstellarTravel < 0.5) {
-//                    newValue = bestUniverseValue + TDR * ((heuristics.length - 1) * lightYears);
-//                } else {
-//                    newValue = bestUniverseValue - TDR * ((heuristics.length - 1) * lightYears);
-//                }
-//
-//                // Convert to bits the new value
-//                BitSet newBitSet = BitManipulator.toBitSet(newValue, bitsPerHeuristic, heuristics.length - 1, 0);
-//                int index = (i * bitsPerRule) + (bitsPerFeature * features.length);
-//                int lengthDiff = bitsPerHeuristic - newBitSet.length();
-//                for (int k = bitsPerHeuristic - 1; k >= lengthDiff; k--) {
-//                    individual.set(index + k, newBitSet.get(k));
-//                }
-//                if (lengthDiff > 0) {
-//                    individual.set(index, index + lengthDiff, false);
-//                }
-//            }
+            double wormHoleExistence = random.nextDouble();
+            if (wormHoleExistence < WEP / 2) {
+                double interstellarTravel = random.nextDouble();
+                double lightYears = random.nextDouble();
+
+                // Get new feature value
+                int newHeuristic;
+                int index = i % (bestUniverse.numberOfRules - 1);
+                int bestUniverseHeuristic = bestUniverse.rules[index].heuristicValue;
+                
+                if (interstellarTravel < 0.5) {
+                    newHeuristic = (int) Math.round(bestUniverseHeuristic + (TDR * lightYears - 1) * bestUniverseHeuristic);
+                } else {
+                    newHeuristic = (int) Math.round(bestUniverseHeuristic + (1 - (TDR * lightYears)) * (heuristics.length - 1 - bestUniverseHeuristic));
+                }
+                
+                rules[i].heuristicValue = newHeuristic;
+            }
         }
     }
 }
