@@ -29,9 +29,10 @@ public class Run {
         };
 
         for (long seed : testSeeds) {
-            for(String[] features : testFeatures) {
+            for(int i = 0; i < testFeatures.length; i++) {
+                System.out.println("Test with seed: " + seed + "    and features index " + i);
                 //        hyperHeuristic = RuleBasedHHFramework.runGeneticAlgorithm(problem, trainingSet, features, heuristics, 50, 1000, 0.9, 0.1, Type.GENERATIONAL, true, seed);
-                hyperHeuristic = MultiverseFramework.runMultiverseOptimizer(problem, trainingSet, features, heuristics, 50, 20, true, seed);
+                hyperHeuristic = MultiverseFramework.runMultiverseOptimizer(problem, trainingSet, testFeatures[i], heuristics, 50, 120, true, seed);
             }
         }
 
