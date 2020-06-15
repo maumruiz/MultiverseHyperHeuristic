@@ -20,16 +20,18 @@ public class Run {
 
 //        String[] features = new String[]{"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_STD_WEIGHT", "NORM_STD_PROFIT", "NORM_STD_PROFIT_WEIGHT", "NORM_CORRELATION"};
         
-        long[] testSeeds = {12345, 55555, 97563, 41528};
+        long[] testSeeds = {12345, 55555, 97563, 41528, 61249, 59274, 55489, 70599, 10936, 44816, 15414, 29531, 95655, 85295, 25511, 41334, 14121, 37224, 80372, 64348};
         String[][] testFeatures = {
-            //{"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_STD_WEIGHT", "NORM_STD_PROFIT", "NORM_STD_PROFIT_WEIGHT", "NORM_CORRELATION"},
-            {"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_CORRELATION"},
+            {"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_STD_WEIGHT", "NORM_STD_PROFIT", "NORM_STD_PROFIT_WEIGHT", "NORM_CORRELATION"},
+//            {"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_CORRELATION"},
 //            {"NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_CORRELATION"},
 //            {"NORM_STD_WEIGHT", "NORM_STD_PROFIT", "NORM_STD_PROFIT_WEIGHT", "NORM_CORRELATION"}
         };
 
         for (long seed : testSeeds) {
             for(int i = 0; i < testFeatures.length; i++) {
+                System.out.println("");
+                System.out.println("-----------------------------------------------------------");
                 System.out.println("Test with seed: " + seed + "    and features index " + i);
                 //        hyperHeuristic = RuleBasedHHFramework.runGeneticAlgorithm(problem, trainingSet, features, heuristics, 50, 1000, 0.9, 0.1, Type.GENERATIONAL, true, seed);
                 hyperHeuristic = MultiverseFramework.runMultiverseOptimizer(problem, trainingSet, testFeatures[i], heuristics, 50, 120, true, seed);
