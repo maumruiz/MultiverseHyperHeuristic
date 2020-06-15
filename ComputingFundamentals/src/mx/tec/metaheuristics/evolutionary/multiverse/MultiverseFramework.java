@@ -37,8 +37,8 @@ public abstract class MultiverseFramework {
         MultiverseHHIndividual bestUniverse = multiverseAlgorithm.run(populationSize, maxEvaluations, printMode);
         
         if(printMode) {
-            System.out.println(bestUniverse.toString());
             System.out.println("Best Universe Evaluation: " + bestUniverse.getEvaluation());
+            System.out.println(bestUniverse.toString());
         }
         
         // Get hyperheuristic from best universe

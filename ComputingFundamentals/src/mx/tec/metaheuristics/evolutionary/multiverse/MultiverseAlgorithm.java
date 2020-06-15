@@ -100,6 +100,9 @@ public class MultiverseAlgorithm {
                 blackHoleIndex++;
             }
             
+            // Get previous evaluation of best universe
+            double lastEvaluation = bestUniverse.getEvaluation();
+            
             // Sort universes
             Collections.sort(this.multiverse);
             bestUniverse = this.multiverse.get(0).copy();
@@ -113,12 +116,17 @@ public class MultiverseAlgorithm {
                 universe.setNormalizedInflationRate(normalizedEvaluation);
             }
             
-            if(printMode) {
+            if(printMode && bestUniverse.getEvaluation() < lastEvaluation ) {
                 averageFitness /= multiverse.size();
                 printFitness(time, bestUniverse.getEvaluation(), averageFitness);
             }
             
             time++;
+        }
+        
+        if(printMode) {
+            System.out.println("Best Universe Evaluation: " + bestUniverse.getEvaluation());
+            System.out.println("Average fitness: " + averageFitness / multiverse.size());
         }
         
         return bestUniverse;
