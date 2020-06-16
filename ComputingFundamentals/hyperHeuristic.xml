@@ -22,9 +22,10 @@ Feel free to add any comments in this section
 		<heuristic name="MIN_WEIGHT"/>
 		<heuristic name="MARKOVITZ"/>
 	</heuristics>
-	<rules nbRules="3">
-		<rule condition="0.32129 0.99160 0.66230 0.02012 0.40449 0.54746 0.66348 0.25449 0.34473 0.75723" action="2"/>
-		<rule condition="-0.03379 0.01777 0.14551 0.34355 0.09395 -0.01387 0.38223 0.12910 1.09707 0.93418" action="1"/>
-		<rule condition="0.68809 0.46777 0.27559 0.18418 0.49004 1.04668 0.05293 0.25918 0.82051 0.54043" action="1"/>
+	<rules nbRules="4">
+		<rule condition="-0.02831 0.78683 0.02467 1.06092 1.02282 -0.08726 -0.08933 -0.04127 1.06054 0.95869" action="2"/>
+		<rule condition="0.12521 0.03761 -0.08613 1.06944 -0.01959 1.09771 0.00143 -0.05455 -0.08833 -0.08834" action="2"/>
+		<rule condition="-0.06422 1.06624 -0.08149 1.03313 0.05068 0.91066 1.05520 1.08588 -0.00811 -0.07850" action="2"/>
+		<rule condition="1.07543 -0.09832 1.05846 1.07187 0.83389 0.76591 -0.05538 0.02516 -0.09708 0.81409" action="1"/>
 	</rules>
 </distance-based-heuristic-selector>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
 import java.text.DecimalFormat;
@@ -11,11 +6,10 @@ import java.util.List;
 
 /**
  *
- * @author Mauricio
+ * @author Mauricio Mendez Ruiz
+ * @author Alejandra de Luna Pámanes
  */
 public class MultiverseAlgorithm {
-    
-    // TO DO: Change classes to the real ones (not the abstract ones)
     private MultiverseHHIndividual bestUniverse;
     private List<MultiverseHHIndividual> multiverse;
     
@@ -24,12 +18,12 @@ public class MultiverseAlgorithm {
     private final RouletteWheelSelector selector;
     
     // Minimum and maximum Wormhole Existence Probability
-    private double WEP_Max = 1.0;
-    private double WEP_Min = 0.2;
+    private final double WEP_Max = 1.0;
+    private final double WEP_Min = 0.2;
     private double WEP;
     
     // Coefficient used to calculate Travelling Distance Rate
-    private double TDR_Coefficient = 6.0;
+    private final double TDR_Coefficient = 6.0;
     private double TDR;
     
     public MultiverseAlgorithm(MultiverseHHEvaluator evaluator, MultiverseHHGenerator generator, RouletteWheelSelector selector) {
@@ -62,6 +56,7 @@ public class MultiverseAlgorithm {
             universe.setNormalizedInflationRate(normalizedEvaluation);
         }
         
+        // Main cycle to evolve the multiverse
         return evolve(maxTime, printMode);
     }
     
@@ -74,26 +69,31 @@ public class MultiverseAlgorithm {
         }
         averageFitness /= multiverse.size();
         
+        // Print first evaluation
         if(printMode) {
             printFitness(-1, bestUniverse.getEvaluation(), averageFitness);
         }
         
-        // Main cycle to evolve universe
+        // Main cycle to evolve the multiverse
         int time = 0;
         while(time <= maxTime) {
+            // Update WEP and TDR
             WEP = WEP_Min + time * ((WEP_Max - WEP_Min) / maxTime);
             TDR = 1 - (Math.pow(time, (1/TDR_Coefficient)) / Math.pow(maxTime, (1/TDR_Coefficient)));
+            
             int blackHoleIndex = 0;
             averageFitness = 0;
             
             for(MultiverseHHIndividual universe : multiverse) {
+                // White/Black hole tunnels for each universe
                 universe.blackWhiteHoleTunnel(multiverse, selector);
                 
+                // Wormhole for all the universe except the best
                 if(blackHoleIndex > 0) {
                     universe.wormHoleTunnel(WEP, TDR, bestUniverse);    
                 }
                 
-                // Set new evaluation
+                // Set new evaluation for this universe
                 double evaluation = evaluator.evaluate(universe);
                 universe.setEvaluation(evaluation);
                 averageFitness += universe.getEvaluation();
@@ -107,7 +107,7 @@ public class MultiverseAlgorithm {
             Collections.sort(this.multiverse);
             bestUniverse = this.multiverse.get(0).copy();
             
-            // Set normalized inflation rates
+            // Set new normalized inflation rates
             double maxInflationRate = Math.abs(this.multiverse.get(0).getEvaluation());
             double minInflationRate = Math.abs(this.multiverse.get(this.multiverse.size() - 1).getEvaluation());
             double normalizedEvaluation;
@@ -116,17 +116,13 @@ public class MultiverseAlgorithm {
                 universe.setNormalizedInflationRate(normalizedEvaluation);
             }
             
-            if(printMode && bestUniverse.getEvaluation() < lastEvaluation ) {
+            // Print this iteration evaluation
+            if(printMode) {
                 averageFitness /= multiverse.size();
                 printFitness(time, bestUniverse.getEvaluation(), averageFitness);
             }
             
             time++;
-        }
-        
-        if(printMode) {
-            System.out.println("Best Universe Evaluation: " + bestUniverse.getEvaluation());
-            System.out.println("Average fitness: " + averageFitness / multiverse.size());
         }
         
         return bestUniverse;

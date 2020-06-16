@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
 import java.util.List;
@@ -11,7 +6,8 @@ import static mx.tec.metaheuristics.evolutionary.multiverse.RuleBHHIndividual.fe
 
 /**
  *
- * @author Mauricio
+ * @author Mauricio Mendez Ruiz
+ * @author Alejandra de Luna Pámanes
  */
 public class MultiverseHHIndividual extends RuleBHHIndividual {
 
@@ -40,12 +36,13 @@ public class MultiverseHHIndividual extends RuleBHHIndividual {
     public void blackWhiteHoleTunnel(List<MultiverseHHIndividual> multiverse, RouletteWheelSelector selector) {
         // Iterate rules
         for (int i = 0; i < numberOfRules; i++) {
-            // Heuristic
             double r1 = random.nextDouble();
             if (r1 < normalizedInflationRate) {
+                // Select a high inflation rate universe as white hole
                 Solution[] whiteHole = selector.select(multiverse, 1);
                 MultiverseHHIndividual whiteHoleUniverse = (MultiverseHHIndividual) whiteHole[0];
-
+                
+                // Exchange objects through white/black hole tunnels
                 int index = i % (whiteHoleUniverse.numberOfRules - 1);
                 Rule whiteHoleRule = whiteHoleUniverse.rules[index].copy();
                 rules[i] = whiteHoleRule;
@@ -73,11 +70,16 @@ public class MultiverseHHIndividual extends RuleBHHIndividual {
                     } else {
                         newValue = bestUniverseValue + (1 - TDR * lightYears) * (MAX_VALUE - bestUniverseValue);
                     }
-
+                    
                     rules[i].featuresValues[j] = newValue;
                 }
             }
-
+            
+            /*
+                The wormhole in the heuristics were removed, because it was giving us worst performance.
+                We should find a better way to exchange heuristics in a way to improve the evaluation performance
+            */
+            /*
             double wormHoleExistence = random.nextDouble();
             if (wormHoleExistence < WEP) {
                 double interstellarTravel = random.nextDouble();
@@ -96,6 +98,7 @@ public class MultiverseHHIndividual extends RuleBHHIndividual {
                 
                 rules[i].heuristicValue = newHeuristic;
             }
+            */
         }
     }
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
 import java.util.Random;
@@ -12,7 +7,8 @@ import mx.tec.hermes.problems.ProblemSet;
 
 /**
  *
- * @author Mauricio
+ * @author Mauricio Mendez Ruiz
+ * @author Alejandra de Luna Pámanes
  */
 public abstract class MultiverseFramework {
            
@@ -25,7 +21,6 @@ public abstract class MultiverseFramework {
         MultiverseHHIndividual.setHeuristics(heuristics);
         
         // HyperHeuristic generator, evaluator and selector
-        // TODO: change to class MultiverseGenerator, MultiverseEvaluator, MultiverseSelector
         MultiverseHHGenerator generator = new MultiverseHHGenerator(random.nextLong());
         MultiverseHHEvaluator evaluator = new MultiverseHHEvaluator(problem, set);
         RouletteWheelSelector selector = new RouletteWheelSelector(random.nextLong());
@@ -36,6 +31,7 @@ public abstract class MultiverseFramework {
         // Evolve multiverse to get the best universe
         MultiverseHHIndividual bestUniverse = multiverseAlgorithm.run(populationSize, maxEvaluations, printMode);
         
+        // Print the best universe hyper heuristic
         if(printMode) {
             System.out.println(bestUniverse.toString());
         }

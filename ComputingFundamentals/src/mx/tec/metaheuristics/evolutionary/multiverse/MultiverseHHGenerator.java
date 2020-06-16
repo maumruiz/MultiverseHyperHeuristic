@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
 import java.util.ArrayList;
@@ -11,10 +6,10 @@ import mx.tec.metaheuristics.Generator;
 
 /**
  *
- * @author Mauricio
+ * @author Mauricio Mendez Ruiz
+ * @author Alejandra de Luna Pámanes
  */
 public class MultiverseHHGenerator extends Generator{
-    // TODO: Consider generation without bits, but doubles
     private final static int MIN_INITIAL_RULES = 3, MAX_INITIAL_RULES = 6, BITS_PER_FEATURE = 10;
     private final Random random;
     

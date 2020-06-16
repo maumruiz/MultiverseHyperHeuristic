@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
 import java.text.DecimalFormat;
@@ -11,7 +6,8 @@ import mx.tec.metaheuristics.Solution;
 
 /**
  *
- * @author Mauricio
+ * @author Mauricio Mendez Ruiz
+ * @author Alejandra de Luna Pámanes
  */
 public class RuleBHHIndividual extends Solution{
     protected int numberOfRules;

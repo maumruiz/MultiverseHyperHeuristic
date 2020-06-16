@@ -1,21 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mx.tec.hermes.utils;
 
 import java.util.BitSet;
 
 /**
  *
- * @author Mauricio
+ * @author Mauricio Mendez Ruiz
+ * @author Alejandra de Luna Pámanes
  */
 public final class BitManipulator {
     /**
      * Returns the value as integer of the bit set provided as argument.
      * <p/>
-     * @param bitset The bit set whose integer value is required.
+     * @param bits The bit set whose integer value is required.
      * @return The value as integer of the bit set provided as argument.
      */
     public static int toInteger(BitSet bits) {
@@ -32,7 +28,7 @@ public final class BitManipulator {
     /**
      * Returns the double value of the bit set provided as argument.
      * 
-     * @param bitset The bit set whose integer value is required.
+     * @param bits The bit set whose integer value is required.
      * @param numberOfBits The maximum number of bits that can be used to
      * represent the value.
      * @return The value as double of the bit set provided as argument.
