@@ -20,7 +20,9 @@ public class Run {
         // hyperHeuristic = MultiverseFramework.runMultiverseOptimizer(problem, trainingSet, features, heuristics, 50, 120, true, seed);
         // hyperHeuristic.save("hyperHeuristic.xml");
         
-        hyperHeuristics = MultiverseFramework.runMultipleMultiverse(problem, trainingSet, features, heuristics, 50, 120, true, seeds, "AllFeatures", 1, 30);
+//        hyperHeuristics = MultiverseFramework.runMultipleMultiverse(problem, trainingSet, features, heuristics, 50, 120, true, seeds, "AllFeatures", 1, 30);
+
+        MultiverseFramework.testHHFromXML(problem, trainingSet, "hyperHeuristic");
         
         //System.out.println(problem.characterize(testSet, features));
         //System.out.println(problem.solve(testSet, heuristics));
