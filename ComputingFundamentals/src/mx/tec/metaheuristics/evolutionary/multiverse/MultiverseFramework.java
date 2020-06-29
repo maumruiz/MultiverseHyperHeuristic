@@ -45,6 +45,22 @@ public abstract class MultiverseFramework {
     }
     
     public static ArrayList<RuleBasedHH> runMultipleMultiverse(Problem problem, ProblemSet set, String[] features, 
+            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String key) {
+        ArrayList<RuleBasedHH> hyperHeuristics = 
+                runMultipleMultiverse(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds, key, 0, seeds.length - 1);
+        
+        return hyperHeuristics;
+    }
+    
+    public static ArrayList<RuleBasedHH> runMultipleMultiverse(Problem problem, ProblemSet set, String[] features, 
+            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String key, int from_seed) {
+        ArrayList<RuleBasedHH> hyperHeuristics = 
+                runMultipleMultiverse(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds, key, from_seed, seeds.length - 1);
+        
+        return hyperHeuristics;
+    }
+    
+    public static ArrayList<RuleBasedHH> runMultipleMultiverse(Problem problem, ProblemSet set, String[] features, 
             String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String key, int from_seed, int to_seed) {
         ArrayList<RuleBasedHH> hyperHeuristics = new ArrayList<RuleBasedHH>();
         RuleBasedHH hyperHeuristic;
