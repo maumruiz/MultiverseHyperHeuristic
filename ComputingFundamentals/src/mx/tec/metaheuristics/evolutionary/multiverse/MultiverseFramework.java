@@ -8,7 +8,8 @@ import mx.tec.hermes.problems.ProblemSet;
 /**
  *
  * @author Mauricio Mendez Ruiz
- * @author Alejandra de Luna Pámanes
+ * @author Alejandra De Luna Pámanes
+ * 
  */
 public abstract class MultiverseFramework {
            

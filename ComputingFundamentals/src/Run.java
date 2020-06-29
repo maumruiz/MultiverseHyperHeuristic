@@ -4,6 +4,7 @@ import mx.tec.hermes.frameworks.rulebased.RuleBasedHH;
 import mx.tec.hermes.problems.ProblemSet;
 import mx.tec.knapsack.problem.KP;
 import mx.tec.metaheuristics.evolutionary.multiverse.MultiverseFramework;
+//import java.text.DecimalFormat;
 
 public class Run {
 
@@ -17,7 +18,10 @@ public class Run {
         /*
          * Initializes the random number generator.
          */
-        seed = 93513;
+        seed = 37224;
+        // 23451, 55555, 97563, 41528, 61249, 59274, 55489, 70599, 10936, 44816,
+        // 15414, 29531, 95655, 34495, 25511, 41334, 14121, 37224, 80372, 64348,
+        // 19244, 98800, 30089, 75657, 83087, 54306, 13762, 20434, 80792, 28294
         /*
          * Defines the features to characterize the knapsack instances. You can use all of them or only a subset of
          * them.
@@ -54,17 +58,22 @@ public class Run {
          * Saves the hyper-heuristic to a file (hyperHeuristic.xml).
          */
         hyperHeuristic.save("hyperHeuristic.xml");
+//        RuleBasedHH readHyperHeuristic("hyperHeuristic.xml");
         /*
          * Characterizes the instances in the test set.
          */
-        System.out.println(problem.characterize(testSet, features));
+        //System.out.println(problem.characterize(testSet, features));
         /*
          * Solves the test set by using the available heuristics.
          */
-        System.out.println(problem.solve(testSet, heuristics));
+        //System.out.println(problem.solve(testSet, heuristics));
         /*
          * Solves the test set by using the hyper-heuristic.
          */
+        System.out.println(problem.solve(testSet, new HyperHeuristic[]{hyperHeuristic}));
+        //testSet = new ProblemSet("instances/Test set B");
+        //System.out.println(problem.solve(testSet, new HyperHeuristic[]{hyperHeuristic}));
+        testSet = new ProblemSet("instances/Test set C");
         System.out.println(problem.solve(testSet, new HyperHeuristic[]{hyperHeuristic}));
     }
 }
