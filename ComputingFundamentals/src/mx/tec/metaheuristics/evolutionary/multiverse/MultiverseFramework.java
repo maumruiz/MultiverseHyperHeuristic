@@ -81,11 +81,11 @@ public abstract class MultiverseFramework {
         return hyperHeuristics;
     }
 
-    public void testMultipleHHFromXML(KP problem, ProblemSet testSet, String key, int size) {
+    public static void testMultipleHHFromXML(KP problem, ProblemSet testSet, String key, int size) {
         testMultipleHHFromXML(problem, testSet, key, 0, size);
     }
 
-    public void testMultipleHHFromXML(KP problem, ProblemSet testSet, String key, int from, int to) {
+    public static void testMultipleHHFromXML(KP problem, ProblemSet testSet, String key, int from, int to) {
         for (int i = from; i < to; i++) {
             System.out.println("");
             System.out.println("-----------------------------------------------------------");
@@ -95,7 +95,7 @@ public abstract class MultiverseFramework {
         }
     }
 
-    public void testHHFromXML(KP problem, ProblemSet testSet, String name) {
+    public static void testHHFromXML(KP problem, ProblemSet testSet, String name) {
         String solved;
         RuleBasedHH hyperHeuristic = new RuleBasedHH(name);
         solved = problem.solve(testSet, new HyperHeuristic[]{hyperHeuristic});
