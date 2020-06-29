@@ -1,5 +1,6 @@
 package mx.tec.metaheuristics.evolutionary.multiverse;
 
+import java.util.ArrayList;
 import java.util.Random;
 import mx.tec.hermes.frameworks.rulebased.RuleBasedHH;
 import mx.tec.hermes.problems.Problem;
@@ -41,5 +42,25 @@ public abstract class MultiverseFramework {
         RuleBasedHH hyperHeuristic = bestUniverse.getHyperHeuristic();
         
         return hyperHeuristic;
+    }
+    
+    public static ArrayList<RuleBasedHH> runMultipleMultiverse(Problem problem, ProblemSet set, String[] features, 
+            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String key, int offset) {
+        ArrayList<RuleBasedHH> hyperHeuristics = new ArrayList<RuleBasedHH>();
+        RuleBasedHH hyperHeuristic;
+        
+        for(int i = 0 + offset; i < seeds.length; i++) {
+            if(printMode) {
+                System.out.println("");
+                System.out.println("-----------------------------------------------------------");
+                System.out.println("HH with seed: " + seeds[i]);
+            }
+                        
+            hyperHeuristic = MultiverseFramework.runMultiverseOptimizer(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds[i]);
+            hyperHeuristic.save("HyperHeuristic_" + key + "_" + i + ".xml");
+            hyperHeuristics.add(hyperHeuristic);
+        }
+        
+        return hyperHeuristics;
     }
 }
