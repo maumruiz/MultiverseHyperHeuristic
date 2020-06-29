@@ -66,14 +66,13 @@ public abstract class MultiverseFramework {
             String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String key, int from_seed, int to_seed) {
         ArrayList<RuleBasedHH> hyperHeuristics = new ArrayList<RuleBasedHH>();
         RuleBasedHH hyperHeuristic;
-
-        for (int i = from_seed; i < to_seed; i++) {
-            if (printMode) {
+        
+        for(int i = from_seed - 1; i < to_seed; i++) {
+            if(printMode) {
                 System.out.println("");
                 System.out.println("-----------------------------------------------------------");
                 System.out.println("HH with seed: " + seeds[i]);
-            }
-
+            }         
             hyperHeuristic = MultiverseFramework.runMultiverseOptimizer(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds[i]);
             hyperHeuristic.save("HyperHeuristic_" + key + "_" + (i + 1) + ".xml");
             hyperHeuristics.add(hyperHeuristic);
