@@ -85,8 +85,8 @@ public abstract class MultiverseFramework {
         testMultipleHHFromXML(problem, testSet, key, 0, size);
     }
 
-    public void testMultipleHHFromXML(KP problem, ProblemSet testSet, String key, int from, int to) {
-        for (int i = from; i < to; i++) {
+    public void testMultipleHHFromXML(KP problem, ProblemSet testSet, String key, int from_seed, int to_seed) {
+        for (int i = from_seed - 1; i < to_seed; i++) {
             System.out.println("");
             System.out.println("-----------------------------------------------------------");
             System.out.println("Test: " + (i + 1));
