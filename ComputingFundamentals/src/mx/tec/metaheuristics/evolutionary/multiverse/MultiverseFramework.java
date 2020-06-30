@@ -86,29 +86,25 @@ public abstract class MultiverseFramework {
         return hyperHeuristics;
     }
 
-    public static void testMultipleHHFromXML(KP problem, ProblemSet testSet, String setName, String key, int size) {
-        testMultipleHHFromXML(problem, testSet, setName, key, 0, size);
-    }
-
-    public static void testMultipleHHFromXML(KP problem, ProblemSet testSet, String setName, String key, int from_seed, int to_seed) {
-        for (int i = from_seed - 1; i < to_seed; i++) {
+    public static void testMultipleHHFromXML(KP problem, ProblemSet testSet, String setName, String hhName, String key, int from_seed, int to_seed) {
+        for (int i = from_seed; i <= to_seed; i++) {
             System.out.println("");
             System.out.println("-----------------------------------------------------------");
-            System.out.println("Test: " + (i + 1));
+            System.out.println("Test: " + i);
 
-            testHHFromXML(problem, testSet, setName, "HyperHeuristic_" + key + "_" + (i + 1));
+            testHHFromXML(problem, testSet, setName, "HyperHeuristic", key, i);
         }
     }
 
-    public static void testHHFromXML(KP problem, ProblemSet testSet, String setName, String hhName) {
+    public static void testHHFromXML(KP problem, ProblemSet testSet, String setName, String hhName, String key, int seed) {
         String solved;
-        String xmlFileName = hhName + ".xml";
+        String xmlFileName = hhName + '_'+ key + '_' + seed + ".xml";
         RuleBasedHH hyperHeuristic = new RuleBasedHH(xmlFileName);
         solved = problem.solve(testSet, new HyperHeuristic[]{hyperHeuristic});
         System.out.println(solved);
         
         String[] solvedArr = solved.split("\t");
-        saveCsv(solvedArr, setName + "_" + hhName + ".csv");
+        saveCsv(solvedArr, setName + "_" + hhName + '_' + seed + ".csv");
     }
     
     public static void saveCsv(String[] testResults, String name) {
