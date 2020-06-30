@@ -54,7 +54,7 @@ public abstract class MultiverseFramework {
     public static ArrayList<RuleBasedHH> runMultipleMultiverse(Problem problem, ProblemSet set, String[] features,
             String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String hhName, String key) {
         ArrayList<RuleBasedHH> hyperHeuristics
-                = runMultipleMultiverse(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds, hhName, key, 0, seeds.length);
+                = runMultipleMultiverse(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds, hhName, key, 1, seeds.length);
 
         return hyperHeuristics;
     }
