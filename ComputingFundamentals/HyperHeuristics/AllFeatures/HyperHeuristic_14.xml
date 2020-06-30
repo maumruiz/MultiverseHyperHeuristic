@@ -1,0 +1,32 @@
+<!--=============================================
+Feel free to add any comments in this section
+=============================================
+-->
+<distance-based-heuristic-selector>
+	<features nbFeatures="10">
+		<feature name="NORM_MEAN_WEIGHT"/>
+		<feature name="NORM_MEAN_PROFIT"/>
+		<feature name="NORM_MEAN_PROFIT_WEIGHT"/>
+		<feature name="NORM_MEDIAN_WEIGHT"/>
+		<feature name="NORM_MEDIAN_PROFIT"/>
+		<feature name="NORM_MEDIAN_PROFIT_WEIGHT"/>
+		<feature name="NORM_STD_WEIGHT"/>
+		<feature name="NORM_STD_PROFIT"/>
+		<feature name="NORM_STD_PROFIT_WEIGHT"/>
+		<feature name="NORM_CORRELATION"/>
+	</features>
+	<heuristics nbHeuristics="5">
+		<heuristic name="DEFAULT"/>
+		<heuristic name="MAX_PROFIT"/>
+		<heuristic name="MAX_PROFIT/WEIGHT"/>
+		<heuristic name="MIN_WEIGHT"/>
+		<heuristic name="MARKOVITZ"/>
+	</heuristics>
+	<rules nbRules="5">
+		<rule condition="1.09991 1.09489 -0.09843 -0.09604 1.09317 -0.09888 1.09141 1.09733 -0.09992 1.09889" action="2"/>
+		<rule condition="1.09649 1.09520 -0.09374 -0.09278 1.09991 1.09797 1.09995 -0.09584 1.09722 -0.09829" action="2"/>
+		<rule condition="-0.09573 -0.09965 1.09203 -0.09900 1.09830 1.09944 1.09995 1.09838 -0.09997 -0.09941" action="2"/>
+		<rule condition="1.09996 -0.09997 -0.09868 1.10000 1.09745 1.09931 1.09787 -0.09994 -0.09930 1.09988" action="1"/>
+		<rule condition="-0.09832 1.09821 -0.09528 1.09964 -0.09914 1.09260 1.09990 -0.09516 1.09906 -0.09299" action="2"/>
+	</rules>
+</distance-based-heuristic-selector>
