@@ -104,7 +104,7 @@ public abstract class MultiverseFramework {
         System.out.println(solved);
         
         String[] solvedArr = solved.split("\t");
-        saveCsv(solvedArr, "testSetEvaluations" + "/" + key + '/' + setName + " Evaluation_" + hhName + '_' + seed + ".csv");
+        saveCsv(solvedArr, "testSetEvaluations" + "/" + key + '/' + setName + '/' + setName + " Evaluation_" + hhName + '_' + key + '_' + seed + ".csv");
     }
     
     public static void saveCsv(String[] testResults, String name) {
