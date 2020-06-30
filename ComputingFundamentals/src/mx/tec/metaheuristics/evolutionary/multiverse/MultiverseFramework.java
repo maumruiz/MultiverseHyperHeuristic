@@ -52,23 +52,23 @@ public abstract class MultiverseFramework {
     }
 
     public static ArrayList<RuleBasedHH> runMultipleMultiverse(Problem problem, ProblemSet set, String[] features,
-            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String key) {
+            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String hhName, String key) {
         ArrayList<RuleBasedHH> hyperHeuristics
-                = runMultipleMultiverse(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds, key, 0, seeds.length - 1);
+                = runMultipleMultiverse(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds, hhName, key, 0, seeds.length);
 
         return hyperHeuristics;
     }
 
     public static ArrayList<RuleBasedHH> runMultipleMultiverse(Problem problem, ProblemSet set, String[] features,
-            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String key, int from_seed) {
+            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String hhName, String key, int from_seed) {
         ArrayList<RuleBasedHH> hyperHeuristics
-                = runMultipleMultiverse(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds, key, from_seed, seeds.length - 1);
+                = runMultipleMultiverse(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds, hhName, key, from_seed, seeds.length);
 
         return hyperHeuristics;
     }
 
     public static ArrayList<RuleBasedHH> runMultipleMultiverse(Problem problem, ProblemSet set, String[] features,
-            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String key, int from_seed, int to_seed) {
+            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String hhName, String key, int from_seed, int to_seed) {
         ArrayList<RuleBasedHH> hyperHeuristics = new ArrayList<RuleBasedHH>();
         RuleBasedHH hyperHeuristic;
 
@@ -79,7 +79,7 @@ public abstract class MultiverseFramework {
                 System.out.println("HH with seed: " + seeds[i]);
             }
             hyperHeuristic = MultiverseFramework.runMultiverseOptimizer(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds[i]);
-            hyperHeuristic.save("HyperHeuristic_" + key + "_" + (i + 1) + ".xml");
+            hyperHeuristic.save("HyperHeuristics/" + key + '/' + hhName + '_' + (i + 1) + ".xml");
             hyperHeuristics.add(hyperHeuristic);
         }
 
@@ -92,19 +92,19 @@ public abstract class MultiverseFramework {
             System.out.println("-----------------------------------------------------------");
             System.out.println("Test: " + i);
 
-            testHHFromXML(problem, testSet, setName, "HyperHeuristic", key, i);
+            testHHFromXML(problem, testSet, setName, hhName, key, i);
         }
     }
 
     public static void testHHFromXML(KP problem, ProblemSet testSet, String setName, String hhName, String key, int seed) {
         String solved;
-        String xmlFileName = hhName + '_'+ key + '_' + seed + ".xml";
+        String xmlFileName = "HyperHeuristics/" + key + '/' + hhName + '_' + seed + ".xml";
         RuleBasedHH hyperHeuristic = new RuleBasedHH(xmlFileName);
         solved = problem.solve(testSet, new HyperHeuristic[]{hyperHeuristic});
         System.out.println(solved);
         
         String[] solvedArr = solved.split("\t");
-        saveCsv(solvedArr, setName + "_" + hhName + '_' + seed + ".csv");
+        saveCsv(solvedArr, "testSetEvaluations" + "/" + key + '/' + setName + " Evaluation_" + hhName + '_' + seed + ".csv");
     }
     
     public static void saveCsv(String[] testResults, String name) {
