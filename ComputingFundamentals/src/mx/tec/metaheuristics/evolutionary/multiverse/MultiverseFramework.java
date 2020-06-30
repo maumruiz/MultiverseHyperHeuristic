@@ -8,6 +8,11 @@ import mx.tec.hermes.problems.Problem;
 import mx.tec.hermes.problems.ProblemSet;
 import mx.tec.knapsack.problem.KP;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
 /**
  *
  * @author Mauricio Mendez Ruiz
@@ -66,13 +71,13 @@ public abstract class MultiverseFramework {
             String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String key, int from_seed, int to_seed) {
         ArrayList<RuleBasedHH> hyperHeuristics = new ArrayList<RuleBasedHH>();
         RuleBasedHH hyperHeuristic;
-        
-        for(int i = from_seed - 1; i < to_seed; i++) {
-            if(printMode) {
+
+        for (int i = from_seed - 1; i < to_seed; i++) {
+            if (printMode) {
                 System.out.println("");
                 System.out.println("-----------------------------------------------------------");
                 System.out.println("HH with seed: " + seeds[i]);
-            }         
+            }
             hyperHeuristic = MultiverseFramework.runMultiverseOptimizer(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds[i]);
             hyperHeuristic.save("HyperHeuristic_" + key + "_" + (i + 1) + ".xml");
             hyperHeuristics.add(hyperHeuristic);
@@ -81,24 +86,45 @@ public abstract class MultiverseFramework {
         return hyperHeuristics;
     }
 
-    public void testMultipleHHFromXML(KP problem, ProblemSet testSet, String key, int size) {
-        testMultipleHHFromXML(problem, testSet, key, 0, size);
+    public static void testMultipleHHFromXML(KP problem, ProblemSet testSet, String setName, String key, int size) {
+        testMultipleHHFromXML(problem, testSet, setName, key, 0, size);
     }
 
-    public void testMultipleHHFromXML(KP problem, ProblemSet testSet, String key, int from_seed, int to_seed) {
+    public static void testMultipleHHFromXML(KP problem, ProblemSet testSet, String setName, String key, int from_seed, int to_seed) {
         for (int i = from_seed - 1; i < to_seed; i++) {
             System.out.println("");
             System.out.println("-----------------------------------------------------------");
             System.out.println("Test: " + (i + 1));
-            
-            testHHFromXML(problem, testSet, "HyperHeuristic_" + key + "_" + (i + 1) + ".xml");
+
+            testHHFromXML(problem, testSet, setName, "HyperHeuristic_" + key + "_" + (i + 1));
         }
     }
 
-    public void testHHFromXML(KP problem, ProblemSet testSet, String name) {
+    public static void testHHFromXML(KP problem, ProblemSet testSet, String setName, String hhName) {
         String solved;
-        RuleBasedHH hyperHeuristic = new RuleBasedHH(name);
+        String xmlFileName = hhName + ".xml";
+        RuleBasedHH hyperHeuristic = new RuleBasedHH(xmlFileName);
         solved = problem.solve(testSet, new HyperHeuristic[]{hyperHeuristic});
         System.out.println(solved);
+        
+        String[] solvedArr = solved.split("\t");
+        saveCsv(solvedArr, setName + "_" + hhName + ".csv");
+    }
+    
+    public static void saveCsv(String[] testResults, String name) {
+        try (PrintWriter writer = new PrintWriter(new File(name))) {
+            StringBuilder sb = new StringBuilder();
+            
+            for (int i = 0; i < testResults.length; i+=2) {
+                sb.append(testResults[i]);
+                sb.append(",");
+                sb.append(testResults[i+1]);
+            }
+            
+            writer.write(sb.toString());
+            System.out.println("Finished writing " + name);
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
