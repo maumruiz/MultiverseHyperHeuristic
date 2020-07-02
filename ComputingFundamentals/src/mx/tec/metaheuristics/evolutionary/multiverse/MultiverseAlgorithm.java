@@ -32,7 +32,7 @@ public class MultiverseAlgorithm {
         this.selector = selector;
     }
     
-    public MultiverseHHIndividual run(int multiverseSize, long maxTime, boolean printMode) {
+    public MultiverseHHIndividual run(int multiverseSize, long maxTime, boolean printMode, boolean HeuristicWH) {
         // Initialize universes
         this.multiverse = generator.multiBigBang(multiverseSize);
         
@@ -57,10 +57,10 @@ public class MultiverseAlgorithm {
         }
         
         // Main cycle to evolve the multiverse
-        return evolve(maxTime, printMode);
+        return evolve(maxTime, printMode, HeuristicWH);
     }
     
-    public MultiverseHHIndividual evolve(long maxTime, boolean printMode) {
+    public MultiverseHHIndividual evolve(long maxTime, boolean printMode, boolean HeuristicWH) {
         double averageFitness = 0;
         
         // Get first average fitness
@@ -90,7 +90,7 @@ public class MultiverseAlgorithm {
                 
                 // Wormhole for all the universe except the best
                 if(blackHoleIndex > 0) {
-                    universe.wormHoleTunnel(WEP, TDR, bestUniverse);    
+                    universe.wormHoleTunnel(WEP, TDR, bestUniverse, HeuristicWH);    
                 }
                 
                 // Set new evaluation for this universe

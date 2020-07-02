@@ -15,19 +15,19 @@ public class Run {
         String[] features = new String[]{"NORM_MEAN_WEIGHT", "NORM_MEAN_PROFIT", "NORM_MEAN_PROFIT_WEIGHT", "NORM_MEDIAN_WEIGHT", "NORM_MEDIAN_PROFIT", "NORM_MEDIAN_PROFIT_WEIGHT", "NORM_STD_WEIGHT", "NORM_STD_PROFIT", "NORM_STD_PROFIT_WEIGHT", "NORM_CORRELATION"};        
         String[] heuristics = new String[]{"DEFAULT", "MAX_PROFIT", "MAX_PROFIT/WEIGHT", "MIN_WEIGHT", "MARKOVITZ"};
         ProblemSet trainingSet = new ProblemSet("instances/Training Set");
-        String testSetName = "Test Set B";
+        String testSetName = "Test Set C";
         ProblemSet testSet = new ProblemSet("instances/" + testSetName);
         KP problem = new KP();
         // File identifiers
         String hhName = "HyperHeuristic";
-        String key = "AllFeatures";
+        String key = "AllFeatures_HeuristicWH";
         
         // hyperHeuristic = MultiverseFramework.runMultiverseOptimizer(problem, trainingSet, features, heuristics, 50, 120, true, seed);
         // hyperHeuristic.save("hyperHeuristic.xml");
         
-        //hyperHeuristics = MultiverseFramework.runMultipleMultiverse(problem, trainingSet, features, heuristics, 50, 120, true, seeds, hhName, key, 3, 10);
+        MultiverseFramework.runMultipleMultiverse(problem, trainingSet, features, heuristics, 50, 120, true, seeds, hhName, key, 2, 30, true);
 
-        MultiverseFramework.testMultipleHHFromXML(problem, testSet, testSetName, hhName, key, 15, 30);
+        MultiverseFramework.testMultipleHHFromXML(problem, testSet, testSetName, hhName, key, 1, 30);
         
         //System.out.println(problem.characterize(testSet, features));
         //System.out.println(problem.solve(testSet, heuristics));

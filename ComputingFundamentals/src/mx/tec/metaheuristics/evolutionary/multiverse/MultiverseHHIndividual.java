@@ -50,7 +50,7 @@ public class MultiverseHHIndividual extends RuleBHHIndividual {
         }
     }
 
-    public void wormHoleTunnel(double WEP, double TDR, MultiverseHHIndividual bestUniverse) {
+    public void wormHoleTunnel(double WEP, double TDR, MultiverseHHIndividual bestUniverse, boolean HeuristicWH) {
         // Iterate rules
         for (int i = 0; i < numberOfRules; i++) {
             // Iterate features
@@ -79,26 +79,27 @@ public class MultiverseHHIndividual extends RuleBHHIndividual {
                 The wormhole in the heuristics were removed, because it was giving us worst performance.
                 We should find a better way to exchange heuristics in a way to improve the evaluation performance
             */
-            /*
-            double wormHoleExistence = random.nextDouble();
-            if (wormHoleExistence < WEP) {
-                double interstellarTravel = random.nextDouble();
-                double lightYears = random.nextDouble();
+            if (HeuristicWH == true) {
+                double wormHoleExistence = random.nextDouble();
+                if (wormHoleExistence < WEP) {
+                    double interstellarTravel = random.nextDouble();
+                    double lightYears = random.nextDouble();
 
-                // Get new feature value
-                int newHeuristic;
-                int index = i % (bestUniverse.numberOfRules - 1);
-                int bestUniverseHeuristic = bestUniverse.rules[index].heuristicValue;
-                
-                if (interstellarTravel < 0.5) {
-                    newHeuristic = (int) Math.round(bestUniverseHeuristic + (TDR * lightYears - 1) * bestUniverseHeuristic);
-                } else {
-                    newHeuristic = (int) Math.round(bestUniverseHeuristic + (1 - (TDR * lightYears)) * (heuristics.length - 1 - bestUniverseHeuristic));
+                    // Get new feature value
+                    int newHeuristic;
+                    int index = i % (bestUniverse.numberOfRules - 1);
+                    int bestUniverseHeuristic = bestUniverse.rules[index].heuristicValue;
+
+                    if (interstellarTravel < 0.5) {
+                        newHeuristic = (int) Math.round(bestUniverseHeuristic + (TDR * lightYears - 1) * bestUniverseHeuristic);
+                    } else {
+                        newHeuristic = (int) Math.round(bestUniverseHeuristic + (1 - (TDR * lightYears)) * (heuristics.length - 1 - bestUniverseHeuristic));
+                    }
+
+                    rules[i].heuristicValue = newHeuristic;
                 }
-                
-                rules[i].heuristicValue = newHeuristic;
             }
-            */
+            
         }
     }
 }

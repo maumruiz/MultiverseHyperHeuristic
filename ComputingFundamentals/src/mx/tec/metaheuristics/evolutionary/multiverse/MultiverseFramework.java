@@ -22,7 +22,7 @@ import java.io.PrintWriter;
 public abstract class MultiverseFramework {
 
     public static RuleBasedHH runMultiverseOptimizer(Problem problem, ProblemSet set, String[] features,
-            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long seed) {
+            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long seed, boolean HeuristicWH) {
         Random random = new Random(seed);
 
         // Set static features and heuristics for all individuals
@@ -38,7 +38,7 @@ public abstract class MultiverseFramework {
         MultiverseAlgorithm multiverseAlgorithm = new MultiverseAlgorithm(evaluator, generator, selector);
 
         // Evolve multiverse to get the best universe
-        MultiverseHHIndividual bestUniverse = multiverseAlgorithm.run(populationSize, maxEvaluations, printMode);
+        MultiverseHHIndividual bestUniverse = multiverseAlgorithm.run(populationSize, maxEvaluations, printMode, HeuristicWH);
 
         // Print the best universe hyper heuristic
         if (printMode) {
@@ -52,23 +52,23 @@ public abstract class MultiverseFramework {
     }
 
     public static ArrayList<RuleBasedHH> runMultipleMultiverse(Problem problem, ProblemSet set, String[] features,
-            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String hhName, String key) {
+            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String hhName, String key, boolean HeuristicWH) {
         ArrayList<RuleBasedHH> hyperHeuristics
-                = runMultipleMultiverse(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds, hhName, key, 1, seeds.length);
+                = runMultipleMultiverse(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds, hhName, key, 1, seeds.length, HeuristicWH);
 
         return hyperHeuristics;
     }
 
     public static ArrayList<RuleBasedHH> runMultipleMultiverse(Problem problem, ProblemSet set, String[] features,
-            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String hhName, String key, int from_seed) {
+            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String hhName, String key, int from_seed, boolean HeuristicWH) {
         ArrayList<RuleBasedHH> hyperHeuristics
-                = runMultipleMultiverse(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds, hhName, key, from_seed, seeds.length);
+                = runMultipleMultiverse(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds, hhName, key, from_seed, seeds.length, HeuristicWH);
 
         return hyperHeuristics;
     }
 
     public static ArrayList<RuleBasedHH> runMultipleMultiverse(Problem problem, ProblemSet set, String[] features,
-            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String hhName, String key, int from_seed, int to_seed) {
+            String[] heuristics, int populationSize, int maxEvaluations, boolean printMode, long[] seeds, String hhName, String key, int from_seed, int to_seed, boolean HeuristicWH) {
         ArrayList<RuleBasedHH> hyperHeuristics = new ArrayList<RuleBasedHH>();
         RuleBasedHH hyperHeuristic;
 
@@ -78,7 +78,7 @@ public abstract class MultiverseFramework {
                 System.out.println("-----------------------------------------------------------");
                 System.out.println("HH with seed: " + seeds[i]);
             }
-            hyperHeuristic = MultiverseFramework.runMultiverseOptimizer(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds[i]);
+            hyperHeuristic = MultiverseFramework.runMultiverseOptimizer(problem, set, features, heuristics, populationSize, maxEvaluations, printMode, seeds[i], HeuristicWH);
             hyperHeuristic.save("HyperHeuristics/" + key + '/' + hhName + '_' + (i + 1) + ".xml");
             hyperHeuristics.add(hyperHeuristic);
         }
